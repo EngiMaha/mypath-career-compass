@@ -1,4 +1,4 @@
-# MyPath · بوصلتي المهنية
+# MyPath · website
 
 An interactive, bilingual (Arabic/English) AI-style career compass for tech graduates in Saudi Arabia. It turns HRDF's official *Guide to Supported Professional Certifications (Telecom & IT, 2025 — 2nd edition)* into a living tool.
 
