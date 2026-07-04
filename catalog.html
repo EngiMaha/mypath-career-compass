@@ -1,0 +1,84 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E7B6C">
+<title>دليل الشهادات · Certification Catalog — MyPath</title>
+<meta name="description" content="دليل بحث كامل لجميع الشهادات المهنية الاحترافية المدعومة من صندوق هدف، قابل للتصفية حسب المجال، مع الأسعار والمهارات وروابط التسجيل.">
+<link rel="stylesheet" href="assets/styles.css">
+
+<body dir="rtl" lang="ar">
+
+<nav class="topnav">
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="mark">🧭</span> MyPath <span style="color:var(--ink-faint); font-weight:400; font-size:.85rem;">· بوصلتي المهنية</span></a>
+    <div class="navlinks" id="navLinks">
+      <a href="index.html">الرئيسية<span class="en-inline">Home</span></a>
+      <a href="index.html#wizard">اختبر مسارك<span class="en-inline">Path Quiz</span></a>
+      <a href="courses.html">الدورات المجانية<span class="en-inline">Free Courses</span></a>
+      <a href="cv-coach.html">مدرب السيرة الذاتية<span class="en-inline">CV Coach</span></a>
+      <a href="catalog.html">دليل الشهادات<span class="en-inline">Certifications</span></a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-toggle" id="navToggle" aria-label="Menu · القائمة" aria-expanded="false">☰</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme · تبديل المظهر">🌗</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap page-hero">
+  <span class="eyebrow">Full reference · المرجع الكامل</span>
+  <h1>دليل الشهادات المهنية الاحترافية 2025 <span class="en-line">2025 Professional Certification Guide</span></h1>
+  <p>كل الشهادات المدعومة من صندوق «هدف»، قابلة للبحث والتصفية، مع رابط رسمي لجهة كل شهادة.
+    <span class="en-line">All HRDF-supported certifications, searchable and filterable, each with an official provider link.</span></p>
+</div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="catalog-controls">
+      <input type="text" id="catalogSearch" placeholder="ابحث بالاسم أو الجهة... · Search by name or provider...">
+      <select id="catalogFilter"></select>
+    </div>
+    <p class="catalog-count" id="catalogCount"></p>
+    <div id="catalogGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span>🧭</span> MyPath · بوصلتي المهنية</div>
+    <p>المصدر: «دليل الشهادات المهنية الاحترافية المدعومة في قطاع الاتصالات وتقنية المعلومات» — النسخة الثانية 2025، الصادر عن المؤسسة العامة للتدريب التقني والمهني وصندوق تنمية الموارد البشرية (هدف). الأسعار تمثل الحد الأعلى للتعويض ضمن منتج دعم الشهادات المهنية الاحترافية، وهي عرضة للتحديث — يرجى مراجعة الدليل الرسمي ومنصة «هدف» للتفاصيل والتسجيل. روابط الجهات المانحة هي صفحاتها الرسمية العامة (وليست بالضرورة رابطًا مباشرًا لاختبار بعينه) — تأكدي من الشهادة المحددة عبر موقع كل جهة.</p>
+    <p class="en-line">Source: "Guide to Supported Professional Certifications in the Telecom & IT Sector" — 2nd edition, 2025, by TVTC and HRDF (Hadaf). Provider links point to each organization's general official page — please confirm the exact certification on their site.</p>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/common.js"></script>
+<script>
+(function(){
+"use strict";
+
+function allCerts(){ const arr = []; CAT_KEYS.forEach(k=> CATS[k].certs.forEach(c=> arr.push({...c, cat:k}))); return arr; }
+const ALL_CERTS = allCerts();
+$("#catalogFilter").innerHTML = '<option value="all">كل المجالات · All fields</option>' + CAT_KEYS.map(k=>`<option value="${k}">${CATS[k].icon} ${CATS[k].label}</option>`).join("");
+
+const params = new URLSearchParams(location.search);
+if(params.get("cat") && CATS[params.get("cat")]) $("#catalogFilter").value = params.get("cat");
+
+function renderCatalog(){
+  const q = $("#catalogSearch").value.trim().toLowerCase(); const f = $("#catalogFilter").value;
+  const filtered = ALL_CERTS.filter(c=>{
+    const matchCat = f==="all" || c.cat===f;
+    const matchQ = !q || c.n.toLowerCase().includes(q) || c.e.toLowerCase().includes(q) || c.p.toLowerCase().includes(q);
+    return matchCat && matchQ;
+  });
+  $("#catalogCount").textContent = "عدد النتائج: " + filtered.length + " من " + ALL_CERTS.length + " · " + filtered.length + " of " + ALL_CERTS.length + " results";
+  $("#catalogGrid").innerHTML = filtered.map(c=>
+    certCardHTML(c, CATS[c.cat].color, {catChip: CATS[c.cat].icon+" "+CATS[c.cat].label})
+  ).join("") || '<p style="color:var(--ink-faint);">لا توجد نتائج. · No results.</p>';
+}
+$("#catalogSearch").addEventListener("input", renderCatalog);
+$("#catalogFilter").addEventListener("change", renderCatalog);
+renderCatalog();
+
+})();
+</script>
+</body>

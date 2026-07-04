@@ -1,0 +1,56 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E7B6C">
+<title>الدورات المجانية · Free Courses — MyPath</title>
+<meta name="description" content="دورات مجانية أو منخفضة التكلفة من IBM، Microsoft، Cisco، AWS، Google وغيرها من كبرى الشركات التقنية، بروابط تسجيل رسمية مباشرة.">
+<link rel="stylesheet" href="assets/styles.css">
+
+<body dir="rtl" lang="ar">
+
+<nav class="topnav">
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="mark">🧭</span> MyPath <span style="color:var(--ink-faint); font-weight:400; font-size:.85rem;">· بوصلتي المهنية</span></a>
+    <div class="navlinks" id="navLinks">
+      <a href="index.html">الرئيسية<span class="en-inline">Home</span></a>
+      <a href="index.html#wizard">اختبر مسارك<span class="en-inline">Path Quiz</span></a>
+      <a href="courses.html">الدورات المجانية<span class="en-inline">Free Courses</span></a>
+      <a href="cv-coach.html">مدرب السيرة الذاتية<span class="en-inline">CV Coach</span></a>
+      <a href="catalog.html">دليل الشهادات<span class="en-inline">Certifications</span></a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-toggle" id="navToggle" aria-label="Menu · القائمة" aria-expanded="false">☰</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme · تبديل المظهر">🌗</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap page-hero">
+  <span class="eyebrow">Free & official learning · دورات مجانية ورسمية</span>
+  <h1>دورات من كبرى الشركات التقنية <span class="en-line">Courses from major tech companies</span></h1>
+  <p>مسارات تعلّم مجانية أو منخفضة التكلفة من IBM، Microsoft، Cisco، AWS، Google وغيرها — مفيدة لبناء مهاراتك بالتوازي مع الشهادات المعتمدة، مع روابط رسمية مباشرة للتسجيل.
+    <span class="en-line">Free (or low-cost) learning paths from IBM, Microsoft, Cisco, AWS, Google and more — with direct official links to enroll.</span></p>
+</div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="course-grid" id="courseGrid"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span>🧭</span> MyPath · بوصلتي المهنية</div>
+    <p>روابط الدورات هي صفحاتها الرسمية العامة لدى كل جهة — تأكدي من تفاصيل الدورة المحددة (المدة، اللغة، الشهادة) عبر موقع الجهة نفسها.</p>
+    <p class="en-line">Course links point to each provider's general official page — please confirm the exact course details (duration, language, certificate) on their own site.</p>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/common.js"></script>
+<script>
+(function(){
+"use strict";
+$("#courseGrid").innerHTML = COURSES.map(c=>courseCardHTML(c)).join("");
+})();
+</script>
+</body>

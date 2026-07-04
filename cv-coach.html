@@ -1,0 +1,325 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E7B6C">
+<title>مدرب السيرة الذاتية · CV Coach — MyPath</title>
+<meta name="description" content="ارفع سيرتك الذاتية بصيغة PDF أو Word واحصل على تحليل فوري بأسلوب ATS مع نصائح قابلة للتنفيذ.">
+<link rel="stylesheet" href="assets/styles.css">
+
+<body dir="rtl" lang="ar">
+
+<nav class="topnav">
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="mark">🧭</span> MyPath <span style="color:var(--ink-faint); font-weight:400; font-size:.85rem;">· بوصلتي المهنية</span></a>
+    <div class="navlinks" id="navLinks">
+      <a href="index.html">الرئيسية<span class="en-inline">Home</span></a>
+      <a href="index.html#wizard">اختبر مسارك<span class="en-inline">Path Quiz</span></a>
+      <a href="courses.html">الدورات المجانية<span class="en-inline">Free Courses</span></a>
+      <a href="cv-coach.html">مدرب السيرة الذاتية<span class="en-inline">CV Coach</span></a>
+      <a href="catalog.html">دليل الشهادات<span class="en-inline">Certifications</span></a>
+    </div>
+    <div class="nav-actions">
+      <button class="nav-toggle" id="navToggle" aria-label="Menu · القائمة" aria-expanded="false">☰</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme · تبديل المظهر">🌗</button>
+    </div>
+  </div>
+</nav>
+
+<div class="wrap page-hero">
+  <span class="eyebrow">Smart coach · المدرب الذكي</span>
+  <h1>هل سيرتك الذاتية جاهزة؟ <span class="en-line">Is your CV ready?</span></h1>
+  <p>ارفع ملف سيرتك الذاتية بصيغة <b>PDF</b> أو <b>Word (.docx)</b> واختر المجال المستهدف — سنحلّلها وفق معايير أساسية شائعة في أنظمة الفرز الآلي (ATS)، مع نصائح فورية قابلة للتنفيذ.
+    <span class="en-line">Upload your CV as PDF or Word (.docx), pick your target field, and get instant, actionable ATS-style feedback.</span></p>
+</div>
+
+<section class="section">
+  <div class="wrap">
+    <div class="cv-shell">
+      <div class="cv-input">
+        <label class="field-label" for="cvTarget">المجال المستهدف <span class="en-inline">Target field</span></label>
+        <select id="cvTarget"></select>
+        <label class="field-label">ملف السيرة الذاتية <span class="en-inline">CV file</span></label>
+        <div class="file-drop" id="fileDrop" tabindex="0" role="button">
+          <span class="ico">📄</span>
+          <span id="fileDropLabel">اضغط أو اسحب ملفك هنا<br><span class="en-inline">Click or drop your file here</span></span>
+          <input type="file" id="cvFile" accept=".pdf,.doc,.docx">
+        </div>
+        <p class="file-formats">الصيغ المدعومة: PDF · DOCX (Word) — الصيغة القديمة .doc غير مدعومة للتحليل التلقائي.<br>
+          <span class="en-inline">Supported: PDF, DOCX (Word). Legacy .doc is not supported for auto-analysis.</span></p>
+        <button class="btn btn-teal" id="cvAnalyze" style="align-self:flex-start;"><span>حلّل سيرتي الذاتية 🔍</span><span class="en-inline">Analyze my CV 🔍</span></button>
+      </div>
+      <div class="cv-report" id="cvReport">
+        <div class="cv-empty">ارفع ملف PDF أو Word لتظهر نتيجة التحليل هنا.<span class="en-line">Upload a PDF or Word file to see your analysis here.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand"><span>🧭</span> MyPath · بوصلتي المهنية</div>
+    <p>هذا التحليل مبني على قواعد استرشادية وقراءة نصية آلية للملف تعمل بالكامل داخل متصفحك (لا يُرفع ملفك لأي خادم)، وليس نظام ذكاء اصطناعي مُدرَّب — وقد لا ينجح استخراج النص من بعض ملفات PDF ذات الخطوط المضمّنة المعقدة، خصوصًا في بعض السير المصممة بالعربية.</p>
+    <p class="en-line">This analysis uses rule-based heuristics and automated text extraction that runs entirely in your browser (your file is never uploaded anywhere) — not a trained AI model. Text extraction may fail on some PDFs with complex embedded fonts, especially certain Arabic-designed CVs.</p>
+  </div>
+</footer>
+
+<script src="assets/data.js"></script>
+<script src="assets/common.js"></script>
+<script>
+(function(){
+"use strict";
+
+const state = { cvFile:null };
+
+$("#cvTarget").innerHTML = CAT_KEYS.map(k=>`<option value="${k}">${CATS[k].icon} ${CATS[k].label} · ${CATS[k].labelEn}</option>`).join("");
+const presetCat = new URLSearchParams(location.search).get("cat");
+if(presetCat && CATS[presetCat]) $("#cvTarget").value = presetCat;
+
+const ACTION_VERBS = ["طورت","صممت","قدت","نفذت","حسنت","حسّنت","أدرت","أنشأت","حللت","خفضت","زدت","بنيت","أطلقت","developed","designed","led","implemented","improved","managed","created","analyzed","reduced","increased","built","launched"];
+const SECTION_WORDS = ["خبرة","خبرات","تعليم","مهارات","ملخص","دورات","experience","education","skills","summary","projects","مشاريع"];
+const CAT_KEYWORDS = {
+  ai:["python","machine learning","تعلم الآلة","ذكاء اصطناعي","tensorflow","ai","نموذج"],
+  cloud:["aws","azure","google cloud","سحابة","cloud","devops"],
+  sw:["javascript","java","git","api","برمجة","developer","code"],
+  game:["unity","unreal","game","لعبة","3d","c#"],
+  data:["sql","power bi","tableau","بيانات","data","excel","dashboard"],
+  infra:["linux","network","شبكة","خادم","server","cisco"],
+  emerging:["iot","blockchain","5g","salesforce","automation","أتمتة"],
+  sec:["security","أمن","firewall","ثغرة","اختراق","soc"],
+  pm:["scrum","agile","project","مشروع","إدارة","stakeholder"],
+  mkt:["seo","تسويق","campaign","social media","محتوى","analytics"]
+};
+
+function analyzeCV(text, catKey){
+  const lower = text.toLowerCase();
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  const wc = words.length;
+  const hasEmail = /[\w.+-]+@[\w-]+\.[\w.-]+/.test(text);
+  const hasPhone = /(\+?\d[\d\s-]{7,}\d)/.test(text);
+  const contactScore = (hasEmail?10:0) + (hasPhone?10:0);
+  const sectionsFound = SECTION_WORDS.filter(w=>lower.includes(w.toLowerCase()));
+  const sectionsScore = Math.min(20, sectionsFound.length * 5);
+  const verbsFound = ACTION_VERBS.filter(w=>lower.includes(w.toLowerCase()));
+  const verbsScore = Math.min(20, verbsFound.length * 4);
+  const numMatches = (text.match(/\d+(\.\d+)?\s?%|\b\d{2,}\b/g)||[]).length;
+  const numScore = Math.min(20, numMatches * 4);
+  const kw = CAT_KEYWORDS[catKey]||[];
+  const kwFound = kw.filter(w=>lower.includes(w.toLowerCase()));
+  const kwScore = Math.min(20, kwFound.length * (20/Math.max(3,Math.min(5,kw.length))));
+  let lengthScore = 10;
+  if(wc < 80) lengthScore = 2; else if(wc < 150) lengthScore = 6; else if(wc > 1400) lengthScore = 6;
+  const total = Math.round(contactScore + sectionsScore + verbsScore + numScore + kwScore + lengthScore);
+  const score = Math.max(0, Math.min(100, total));
+  const items = [
+    {ok: hasEmail && hasPhone, warn: hasEmail || hasPhone, title:["بيانات التواصل","Contact info"],
+      pass:["وجدنا بريدًا إلكترونيًا ورقم تواصل بوضوح.","We found both an email and a phone number."],
+      warnTx:["وجدنا وسيلة تواصل واحدة فقط — أضف البريد ورقم الجوال معًا.","Only one contact method found — add both email and phone."],
+      fail:["لم نعثر على بريد إلكتروني أو رقم جوال — أضفهما في أعلى السيرة.","No email or phone found — add both near the top of your CV."]},
+    {ok: sectionsFound.length>=3, warn: sectionsFound.length>=1, title:["أقسام واضحة","Clear sections"],
+      pass:["السيرة منظمة بأقسام واضحة (خبرة، تعليم، مهارات...).","Your CV has clear sections (experience, education, skills...)."],
+      warnTx:["أقسام قليلة فقط — أضف عناوين صريحة مثل «الخبرات» و«المهارات».","Few sections found — add explicit headings like Experience and Skills."],
+      fail:["لا توجد عناوين أقسام واضحة — قسّم سيرتك إلى ملخص/خبرات/تعليم/مهارات.","No clear section headings — split into Summary/Experience/Education/Skills."]},
+    {ok: verbsFound.length>=4, warn: verbsFound.length>=1, title:["أفعال إنجاز قوية","Strong action verbs"],
+      pass:["تستخدم أفعالًا قوية مثل «طوّرت» و«قدت» تصف إنجازاتك بفعالية.","You use strong verbs like Developed/Led to describe achievements."],
+      warnTx:["استخدم أفعال إنجاز إضافية (طوّرت، حسّنت، قدت) بدل الجمل العامة.","Use more action verbs (Developed, Improved, Led) instead of generic phrasing."],
+      fail:["ابدأ كل نقطة بفعل إنجاز قوي بدل عبارات مثل «مسؤول عن...».","Start each bullet with a strong verb instead of \"Responsible for...\"."]},
+    {ok: numMatches>=3, warn: numMatches>=1, title:["إنجازات مقيّسة بالأرقام","Quantified achievements"],
+      pass:["تُظهر سيرتك أرقامًا ونتائج ملموسة (نسب، أعداد).","Your CV shows concrete numbers and results (percentages, counts)."],
+      warnTx:["أضف مزيدًا من الأرقام (%، عدد المستخدمين، المدة) لتقوية مصداقيتك.","Add more numbers (%, user counts, timeframes) to strengthen credibility."],
+      fail:["لا توجد أرقام أو نسب — حوّل «حسّنت الأداء» إلى «حسّنت الأداء 30%».","No numbers found — turn \"Improved performance\" into \"Improved performance by 30%\"."]},
+    {ok: kwFound.length>=3, warn: kwFound.length>=1, title:["مطابقة كلمات المجال","Field keyword match"],
+      pass:["سيرتك تحتوي على كلمات مفتاحية مهمة لهذا المجال.","Your CV contains important keywords for this field."],
+      warnTx:["أضف مصطلحات أكثر ارتباطًا بهذا المجال، مثل: __KW__.","Add more field-related terms, such as: __KW__."],
+      fail:["لا توجد كلمات مفتاحية مرتبطة بهذا المجال — أضف مهاراتك وأدواتك صراحة، مثل: __KW__.","No field-related keywords — add your relevant skills/tools explicitly, e.g.: __KW__."]},
+    {ok: wc>=150 && wc<=1200, warn: wc>=80, title:["طول مناسب","Appropriate length"],
+      pass:["طول السيرة ضمن المدى المناسب.","CV length is within a good range."],
+      warnTx:["السيرة قصيرة نسبيًا — فصّل خبراتك وإنجازاتك أكثر.","CV is a bit short — elaborate more on your experience."],
+      fail:["السيرة قصيرة جدًا أو طويلة جدًا — استهدف 300-800 كلمة تقريبًا.","CV is too short or too long — aim for roughly 300-800 words."]}
+  ];
+  const kwList = kw.slice(0,4).join(", ");
+  items[4].warnTx[0] = items[4].warnTx[0].replace("__KW__", kwList); items[4].warnTx[1] = items[4].warnTx[1].replace("__KW__", kwList);
+  items[4].fail[0] = items[4].fail[0].replace("__KW__", kwList); items[4].fail[1] = items[4].fail[1].replace("__KW__", kwList);
+  items[4].title[0] += " (" + CATS[catKey].label + ")"; items[4].title[1] += " (" + CATS[catKey].labelEn + ")";
+  return {score, items, wc};
+}
+
+function renderCvReport(text, catKey){
+  const {score, items} = analyzeCV(text, catKey);
+  const status = score>=75 ? {c:"good",l:["جيدة جدًا","Very good"]} : score>=50 ? {c:"warn",l:["تحتاج تحسينًا","Needs work"]} : {c:"bad",l:["تحتاج عملًا إضافيًا","Needs significant work"]};
+  let html = `<div class="score-tile">
+    <div class="num-big" style="color:var(--${status.c})">${score}</div>
+    <div class="score-meta">
+      <span class="score-tag" style="color:var(--${status.c})">${status.l[0]}<span class="en-inline">${status.l[1]}</span></span>
+      <div class="score-track"><div class="score-fill" style="width:0%; background:var(--${status.c})" data-w="${score}"></div></div>
+      <span style="font-size:.76rem; color:var(--ink-faint);">من 100 وفق 6 معايير أساسية شائعة في أنظمة الفرز الآلي (ATS)<span class="en-line">out of 100, based on 6 criteria common in ATS systems</span></span>
+    </div>
+  </div><div class="check-list">`;
+  items.forEach(it=>{
+    const st = it.ok ? "good" : it.warn ? "warn" : "bad";
+    const icon = it.ok ? "✓" : it.warn ? "!" : "✕";
+    const t = it.ok ? it.pass : it.warn ? it.warnTx : it.fail;
+    html += `<div class="check-item"><span class="check-ic" style="background:var(--${st})">${icon}</span>
+      <div><h5>${it.title[0]}<span class="en-inline">${it.title[1]}</span></h5><p>${t[0]}<span class="en-line">${t[1]}</span></p></div></div>`;
+  });
+  html += `</div>`;
+  const cat = CATS[catKey]; const cheapPick = cat.certs.slice().sort((a,b)=>a.c-b.c)[0];
+  html += `<div class="check-item" style="border-color:var(--gold); background:var(--gold-soft);">
+    <span class="check-ic" style="background:var(--gold)">★</span>
+    <div><h5>الخطوة التالية <span class="en-inline">Next step</span></h5>
+    <p>أضف على سيرتك أنك بصدد الحصول على «${cheapPick.n}» (${cheapPick.p}) — خطوة تأسيسية معترف بها في مجال ${cat.label} تُظهر جديتك لأصحاب العمل.
+      <span class="en-line">Add that you're pursuing "${cheapPick.e}" (${cheapPick.p}) — a recognized foundational step in ${cat.labelEn}.</span>
+      <a href="roadmap.html?cat=${catKey}" style="color:var(--gold-strong,var(--gold)); font-weight:700;">شاهد خارطة الطريق الكاملة · Full roadmap ←</a></p></div>
+  </div>`;
+  $("#cvReport").innerHTML = html;
+  requestAnimationFrame(()=>{ setTimeout(()=>{ const f=$(".score-fill"); if(f) f.style.width = f.dataset.w+"%"; }, 30); });
+}
+function renderCvMessage(html){ $("#cvReport").innerHTML = `<div class="cv-empty">${html}</div>`; }
+
+/* ---------- file parsing: DOCX (zip+inflate) & PDF (best-effort) ---------- */
+function bytesToLatin1(bytes){ let s=''; const CH=0x8000; for(let i=0;i<bytes.length;i+=CH){ s += String.fromCharCode.apply(null, bytes.subarray(i, i+CH)); } return s; }
+function latin1ToBytes(str){ const arr = new Uint8Array(str.length); for(let i=0;i<str.length;i++) arr[i] = str.charCodeAt(i) & 0xFF; return arr; }
+async function inflateBytes(bytes, format){
+  if (typeof DecompressionStream === 'undefined') throw new Error('no-ds');
+  const ds = new DecompressionStream(format);
+  const stream = new Blob([bytes]).stream().pipeThrough(ds);
+  const buf = await new Response(stream).arrayBuffer();
+  return new Uint8Array(buf);
+}
+function docxXmlToText(xml){
+  let t = xml.replace(/<w:tab\/>/g, '\t').replace(/<\/w:p>/g, '\n').replace(/<w:br\/>/g, '\n').replace(/<[^>]+>/g, '')
+    .replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'");
+  return t.replace(/\n{3,}/g,'\n\n').trim();
+}
+async function extractDocx(arrayBuffer){
+  const bytes = new Uint8Array(arrayBuffer); const dv = new DataView(arrayBuffer);
+  let offset = 0; let xmlBytes = null;
+  while(offset < bytes.length - 4){
+    const sig = dv.getUint32(offset, true);
+    if(sig !== 0x04034b50) break;
+    const flags = dv.getUint16(offset+6, true);
+    const method = dv.getUint16(offset+8, true);
+    const compSize = dv.getUint32(offset+18, true);
+    const nameLen = dv.getUint16(offset+26, true);
+    const extraLen = dv.getUint16(offset+28, true);
+    const nameStart = offset+30;
+    const name = bytesToLatin1(bytes.subarray(nameStart, nameStart+nameLen));
+    const dataStart = nameStart+nameLen+extraLen;
+    let dataEnd = dataStart+compSize;
+    if(name === 'word/document.xml'){
+      const raw = bytes.subarray(dataStart, dataEnd);
+      xmlBytes = method === 0 ? raw : await inflateBytes(raw, 'deflate-raw');
+      break;
+    }
+    if((flags & 0x8) && compSize === 0){
+      let found = -1;
+      for(let i=dataStart;i<bytes.length-4;i++){ if(dv.getUint32(i,true) === 0x04034b50){ found=i; break; } }
+      if(found === -1) break;
+      offset = found;
+    } else { offset = dataEnd; }
+  }
+  if(!xmlBytes) throw new Error('docx-parse-failed');
+  return docxXmlToText(new TextDecoder('utf-8').decode(xmlBytes));
+}
+function unescapePdfString(s){
+  return s.replace(/\\(\d{1,3}|.)/g, (m,g)=>{
+    if(/^\d+$/.test(g)) return String.fromCharCode(parseInt(g,8)||0);
+    if(g==='n') return '\n'; if(g==='r') return '\r'; if(g==='t') return '\t';
+    if(g==='('||g===')'||g==='\\') return g;
+    return '';
+  });
+}
+function extractTextOperators(content){
+  let out = ''; const opRe = /\((?:[^()\\]|\\.)*\)\s*Tj|\[(?:[^\[\]]|\\.)*\]\s*TJ|\bT\*|\bTd\b|\bTD\b/g;
+  let m;
+  while((m = opRe.exec(content))){
+    const tok = m[0];
+    if(tok === "T*" || tok === "Td" || tok === "TD"){ out += '\n'; continue; }
+    if(/Tj\s*$/.test(tok)){ const str = tok.slice(tok.indexOf('(')+1, tok.lastIndexOf(')')); out += unescapePdfString(str) + ' '; }
+    else if(/TJ\s*$/.test(tok)){
+      const arr = tok.slice(tok.indexOf('[')+1, tok.lastIndexOf(']'));
+      const strRe = /\((?:[^()\\]|\\.)*\)/g; let sm;
+      while((sm = strRe.exec(arr))){ out += unescapePdfString(sm[0].slice(1,-1)); }
+      out += ' ';
+    }
+  }
+  return out;
+}
+async function extractPdfText(arrayBuffer){
+  const bytes = new Uint8Array(arrayBuffer); const raw = bytesToLatin1(bytes);
+  const streamRe = /stream\r?\n([\s\S]*?)\r?\nendstream/g; let m; let allText = '';
+  while((m = streamRe.exec(raw))){
+    const before = raw.slice(Math.max(0, m.index-500), m.index);
+    const isFlate = /\/Filter\s*(\[[^\]]*\/FlateDecode[^\]]*\]|\/FlateDecode)/.test(before);
+    const chunkBytes = latin1ToBytes(m[1]);
+    let content;
+    if(isFlate){ try{ content = bytesToLatin1(await inflateBytes(chunkBytes, 'deflate')); } catch(e){ continue; } }
+    else content = m[1];
+    if(/\bBT\b/.test(content) && (/\bTj\b/.test(content) || /\bTJ\b/.test(content))){ allText += extractTextOperators(content) + '\n'; }
+  }
+  return allText.trim();
+}
+function looksUsable(text){
+  if(!text || text.trim().length < 40) return false;
+  const words = text.trim().split(/\s+/).filter(w=>w.length>1);
+  if(words.length < 15) return false;
+  const printable = (text.match(/[\x20-\x7Eء-ي]/g)||[]).length;
+  return (printable/text.length) > 0.6;
+}
+
+/* ---------- file input wiring ---------- */
+const fileDrop = $("#fileDrop"), cvFileInput = $("#cvFile"), fileDropLabel = $("#fileDropLabel");
+fileDrop.addEventListener("click", ()=> cvFileInput.click());
+fileDrop.addEventListener("keydown", (e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); cvFileInput.click(); } });
+["dragover","dragenter"].forEach(ev=> fileDrop.addEventListener(ev, (e)=>{ e.preventDefault(); fileDrop.classList.add("drag"); }));
+["dragleave","drop"].forEach(ev=> fileDrop.addEventListener(ev, (e)=>{ e.preventDefault(); fileDrop.classList.remove("drag"); }));
+fileDrop.addEventListener("drop", (e)=>{ const f = e.dataTransfer.files[0]; if(f){ cvFileInput.files = e.dataTransfer.files; onFilePicked(f); } });
+cvFileInput.addEventListener("change", (e)=>{ const f = e.target.files[0]; if(f) onFilePicked(f); });
+function onFilePicked(file){
+  state.cvFile = file;
+  fileDropLabel.innerHTML = '📎 ' + file.name + '<br><span class="en-inline">Ready to analyze</span>';
+}
+
+$("#cvAnalyze").addEventListener("click", async ()=>{
+  const file = state.cvFile; const catKey = $("#cvTarget").value;
+  if(!file){
+    renderCvMessage('يرجى اختيار ملف PDF أو Word أولًا.<span class="en-line">Please choose a PDF or Word file first.</span>');
+    return;
+  }
+  const name = file.name.toLowerCase(); const ext = name.split('.').pop();
+  renderCvMessage('⏳ جارٍ قراءة الملف وتحليله...<span class="en-line">Reading and analyzing your file...</span>');
+  try{
+    if(ext === 'doc'){
+      renderCvMessage('صيغة Word القديمة (.doc) غير قابلة للقراءة تلقائيًا في المتصفح. يرجى فتح الملف في Word وحفظه بصيغة <b>.docx</b> ثم إعادة الرفع، أو تصديره كـ PDF.<span class="en-line">Legacy .doc files cannot be read in-browser. Please re-save as <b>.docx</b> in Word, or export as PDF, then re-upload.</span>');
+      return;
+    }
+    if(ext !== 'pdf' && ext !== 'docx'){
+      renderCvMessage('صيغة غير مدعومة. يرجى رفع ملف بصيغة PDF أو DOCX فقط.<span class="en-line">Unsupported format. Please upload a PDF or DOCX file only.</span>');
+      return;
+    }
+    if(typeof DecompressionStream === 'undefined'){
+      renderCvMessage('متصفحك الحالي لا يدعم فك ضغط الملفات المطلوب لقراءة PDF/Word. جرّبي متصفحًا حديثًا مثل Chrome أو Edge.<span class="en-line">Your browser lacks the decompression support needed to read PDF/Word files. Try a recent Chrome or Edge.</span>');
+      return;
+    }
+    const buf = await file.arrayBuffer();
+    let text = '';
+    if(ext === 'docx'){
+      text = await extractDocx(buf);
+    } else {
+      text = await extractPdfText(buf);
+      if(!looksUsable(text)){
+        renderCvMessage('تعذّر استخراج نص كافٍ من ملف PDF هذا تلقائيًا — غالبًا بسبب خطوط مضمّنة معقّدة (شائع في بعض السير المصممة بالعربية). جرّبي رفع نسخة <b>Word (.docx)</b> للحصول على تحليل دقيق.<span class="en-line">Could not extract enough text from this PDF automatically (often due to complex embedded fonts). Please upload a <b>Word (.docx)</b> version for accurate analysis.</span>');
+        return;
+      }
+    }
+    if(!text || text.trim().length < 20){
+      renderCvMessage('الملف يبدو فارغًا أو غير قابل للقراءة. جرّبي ملفًا آخر.<span class="en-line">The file appears empty or unreadable. Please try another file.</span>');
+      return;
+    }
+    renderCvReport(text, catKey);
+  } catch(err){
+    renderCvMessage('حدث خطأ أثناء قراءة الملف. تأكدي أنه غير محمي بكلمة مرور وأعيدي المحاولة.<span class="en-line">Something went wrong reading the file. Make sure it is not password-protected and try again.</span>');
+  }
+});
+
+})();
+</script>
+</body>
