@@ -2,7 +2,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0E7B6C">
 <title>MyPath · بوصلتي المهنية</title>
-<meta name="description" content="بوصلة مهنية تفاعلية ثنائية اللغة: اكتشف مسارك التقني، احصل على خارطة طريق من الشهادات والدورات المعتمدة مع روابط تسجيل حقيقية، وحلّل سيرتك الذاتية (PDF/Word).">
+<meta name="description" content="بوصلة مهنية تفاعلية: اكتشف مسارك التقني، احصل على خارطة طريق من الشهادات والدورات المعتمدة مع روابط تسجيل حقيقية، وحلّل سيرتك الذاتية.">
 <link rel="stylesheet" href="assets/styles.css">
 
 <body dir="rtl" lang="ar">
@@ -11,15 +11,15 @@
   <div class="wrap">
     <a href="index.html" class="brand"><span class="mark">🧭</span> MyPath <span style="color:var(--ink-faint); font-weight:400; font-size:.85rem;">· بوصلتي المهنية</span></a>
     <div class="navlinks" id="navLinks">
-      <a href="index.html">الرئيسية<span class="en-inline">Home</span></a>
-      <a href="index.html#wizard">اختبر مسارك<span class="en-inline">Path Quiz</span></a>
-      <a href="courses.html">الدورات المجانية<span class="en-inline">Free Courses</span></a>
-      <a href="cv-coach.html">مدرب السيرة الذاتية<span class="en-inline">CV Coach</span></a>
-      <a href="catalog.html">دليل الشهادات<span class="en-inline">Certifications</span></a>
+      <a href="index.html">الرئيسية</a>
+      <a href="index.html#wizard">اختبر مسارك</a>
+      <a href="courses.html">الدورات المجانية</a>
+      <a href="cv-coach.html">مدرب السيرة الذاتية</a>
+      <a href="catalog.html">دليل الشهادات</a>
     </div>
     <div class="nav-actions">
-      <button class="nav-toggle" id="navToggle" aria-label="Menu · القائمة" aria-expanded="false">☰</button>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme · تبديل المظهر">🌗</button>
+      <button class="nav-toggle" id="navToggle" aria-label="القائمة" aria-expanded="false">☰</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">🌗</button>
     </div>
   </div>
 </nav>
@@ -28,25 +28,19 @@
   <canvas id="heroCanvas"></canvas>
   <div class="wrap">
     <div class="hero-inner">
-      <span class="eyebrow">AI Career Compass · مرشدك المهني بالذكاء الاصطناعي</span>
-      <h1 style="margin-top:.6rem;">
-        من خريج <em>تائه</em>، إلى محترف <em>يملك خطة</em>.
-        <span class="en-line">From a lost graduate to a professional with a plan.</span>
-      </h1>
-      <p class="lede">
-        أجب عن بضعة أسئلة، ودَع MyPath يبني لك خارطة طريق واقعية نحو أول وظيفة تقنية — شهادات ودورات معتمدة، أسعارها الحقيقية، وحدّ التعويض المتاح من صندوق «هدف»، وروابط تسجيل مباشرة لدى كل جهة.
-        <span class="en-line">Answer a few questions and let MyPath build a realistic roadmap to your first tech job — real certifications & courses, real prices, HRDF's reimbursement cap, and direct provider links.</span>
-      </p>
+      <span class="eyebrow">مرشدك المهني بالذكاء الاصطناعي</span>
+      <h1 style="margin-top:.6rem;">من خريج <em>تائه</em>، إلى محترف <em>يملك خطة</em>.</h1>
+      <p class="lede">أجب عن بضعة أسئلة، ودَع MyPath يبني لك خارطة طريق واقعية نحو أول وظيفة تقنية — شهادات ودورات معتمدة، أسعارها الحقيقية، وحدّ التعويض المتاح من صندوق «هدف»، وروابط تسجيل مباشرة لدى كل جهة.</p>
       <div class="hero-ctas">
-        <button class="btn btn-gold" id="ctaExplore"><span>لست متأكدًا من مسـاري 🎯</span><span class="en-inline">Not sure of my path 🎯</span></button>
-        <button class="btn btn-ghost" id="ctaDirect"><span>أعرف مجالي، أعطني الخطة →</span><span class="en-inline">I know my field →</span></button>
+        <button class="btn btn-gold" id="ctaExplore">لست متأكدًا من مسـاري 🎯</button>
+        <button class="btn btn-ghost" id="ctaDirect">أعرف مجالي، أعطني الخطة →</button>
       </div>
       <div class="trust-strip">
-        <span>📘 دليل الشهادات المهنية الاحترافية 2025 <span class="en-inline">2025 Professional Certification Guide</span></span>
+        <span>📘 دليل الشهادات المهنية الاحترافية 2025</span>
         <span class="dot"></span>
-        <span>المؤسسة العامة للتدريب التقني والمهني <span class="en-inline">TVTC</span></span>
+        <span>المؤسسة العامة للتدريب التقني والمهني</span>
         <span class="dot"></span>
-        <span>صندوق تنمية الموارد البشرية <span class="en-inline">HRDF · Hadaf</span></span>
+        <span>صندوق تنمية الموارد البشرية (هدف)</span>
       </div>
     </div>
   </div>
@@ -57,44 +51,40 @@
 
     <div id="panelChoice">
       <div class="section-head">
-        <span class="eyebrow">Step 1 · الخطوة الأولى</span>
-        <h2>كيف تحب أن نبدأ؟ <span class="en-line">How would you like to start?</span></h2>
-        <p>اختر الطريقة الأنسب لوضعك الحالي — كلا الطريقين ينتهيان بخارطة طريق كاملة.
-          <span class="en-line">Pick whichever fits you — both paths end in a full roadmap.</span></p>
+        <span class="eyebrow">الخطوة الأولى</span>
+        <h2>كيف تحب أن نبدأ؟</h2>
+        <p>اختر الطريقة الأنسب لوضعك الحالي — كلا الطريقين ينتهيان بخارطة طريق كاملة.</p>
       </div>
       <div class="choice-grid">
         <button class="choice-card" id="goQuiz">
           <span class="ico">🧩</span>
-          <h3>ساعدني أكتشف شغفي <span class="en-inline" style="display:block;">Help me discover my path</span></h3>
-          <p>لم تحدد تخصصك بعد؟ أجب عن 5 أسئلة سريعة عن اهتماماتك، وسنقترح عليك أقرب 3 مسارات تقنية لشخصيتك.
-            <span class="en-line">Not sure yet? Answer 5 quick questions and get your top 3 matching tech paths.</span></p>
-          <span class="go">ابدأ الاختبار · Start the quiz ←</span>
+          <h3>ساعدني أكتشف شغفي</h3>
+          <p>لم تحدد تخصصك بعد؟ أجب عن 5 أسئلة سريعة عن اهتماماتك، وسنقترح عليك أقرب 3 مسارات تقنية لشخصيتك.</p>
+          <span class="go">ابدأ الاختبار ←</span>
         </button>
         <button class="choice-card" id="goDirect">
           <span class="ico">🗺️</span>
-          <h3>أعرف مجالي بالضبط <span class="en-inline" style="display:block;">I already know my field</span></h3>
-          <p>اخترت تخصصك مسبقًا؟ اختر المجال مباشرة، واحصل فورًا على خارطة طريق مرحلية بالشهادات والدورات المناسبة.
-            <span class="en-line">Pick your field directly and get an instant staged roadmap.</span></p>
-          <span class="go">اختر المجال · Choose a field ←</span>
+          <h3>أعرف مجالي بالضبط</h3>
+          <p>اخترت تخصصك مسبقًا؟ اختر المجال مباشرة، واحصل فورًا على خارطة طريق مرحلية بالشهادات والدورات المناسبة.</p>
+          <span class="go">اختر المجال ←</span>
         </button>
       </div>
     </div>
 
     <div id="panelDirect" class="hidden">
       <div class="section-head">
-        <span class="eyebrow">Choose a field · اختر مجالك</span>
-        <h2>عشرة مسارات تقنية <span class="en-line">Ten tech career tracks</span></h2>
-        <p>كل مجال يحتوي على خارطة طريق من ثلاث مراحل: التأسيس، التخصص، ثم الاحتراف.
-          <span class="en-line">Each field has a 3-stage roadmap: Foundation, Specialization, Mastery.</span></p>
+        <span class="eyebrow">اختر مجالك</span>
+        <h2>عشرة مسارات تقنية</h2>
+        <p>كل مجال يحتوي على خارطة طريق من ثلاث مراحل: التأسيس، التخصص، ثم الاحتراف.</p>
       </div>
       <div class="choice-grid" id="catPickerGrid"></div>
-      <button class="btn btn-ghost" style="margin-top:1.6rem;" data-back-to="panelChoice">→ رجوع · Back</button>
+      <button class="btn btn-ghost" style="margin-top:1.6rem;" data-back-to="panelChoice">→ رجوع</button>
     </div>
 
     <div id="panelQuiz" class="hidden">
       <div class="section-head">
-        <span class="eyebrow">Path Quiz · اختبار المسار</span>
-        <h2>خمسة أسئلة، وتعرف وجهتك <span class="en-line">Five questions to find your way</span></h2>
+        <span class="eyebrow">اختبار المسار</span>
+        <h2>خمسة أسئلة، وتعرف وجهتك</h2>
       </div>
       <div class="quiz-shell">
         <div class="quiz-progress" id="quizProgress"></div>
@@ -102,7 +92,7 @@
         <h3 class="quiz-title" id="quizQTitle"></h3>
         <div class="quiz-opts" id="quizOpts"></div>
         <div class="quiz-nav">
-          <button class="quiz-back" id="quizBack">→ السؤال السابق · Back</button>
+          <button class="quiz-back" id="quizBack">→ السؤال السابق</button>
           <span style="font-size:.8rem; color:var(--ink-faint);" id="quizStepLabel"></span>
         </div>
       </div>
@@ -110,9 +100,9 @@
 
     <div id="panelResults" class="hidden">
       <div class="section-head">
-        <span class="eyebrow">Your result · نتيجتك</span>
-        <h2>هذا ما يناسب شخصيتك تقنيًا <span class="en-line">What fits your personality best</span></h2>
-        <p>اختر أحد المسارات الثلاثة الذهبية لبدء خارطة الطريق. <span class="en-line">Pick one of your top 3 gold matches to build a roadmap.</span></p>
+        <span class="eyebrow">نتيجتك</span>
+        <h2>هذا ما يناسب شخصيتك تقنيًا</h2>
+        <p>اختر أحد المسارات الثلاثة الذهبية لبدء خارطة الطريق.</p>
       </div>
       <div id="resultsBars"></div>
       <div class="top-picks" id="topPicks"></div>
@@ -123,9 +113,12 @@
 
 <footer>
   <div class="wrap">
-    <div class="brand"><span>🧭</span> MyPath · بوصلتي المهنية</div>
-    <p>المصدر: «دليل الشهادات المهنية الاحترافية المدعومة في قطاع الاتصالات وتقنية المعلومات» — النسخة الثانية 2025، الصادر عن المؤسسة العامة للتدريب التقني والمهني وصندوق تنمية الموارد البشرية (هدف). الأسعار تمثل الحد الأعلى للتعويض ضمن منتج دعم الشهادات المهنية الاحترافية، وهي عرضة للتحديث — يرجى مراجعة الدليل الرسمي ومنصة «هدف» للتفاصيل والتسجيل. روابط الجهات المانحة والدورات هي صفحاتها الرسمية العامة (وليست بالضرورة رابطًا مباشرًا لاختبار أو دورة بعينها) — تأكدي من الشهادة أو الدورة المحددة عبر موقع كل جهة. هذا الموقع نموذج توضيحي (Prototype)، وتحليل السيرة الذاتية مبني على قواعد استرشادية وقراءة نصية آلية للملف، وليس نظام ذكاء اصطناعي مُدرَّب.</p>
-    <p class="en-line">Source: "Guide to Supported Professional Certifications in the Telecom & IT Sector" — 2nd edition, 2025, by TVTC and HRDF (Hadaf). Shown prices are the maximum HRDF reimbursement cap and may change — check the official guide and Hadaf's platform for enrollment details. Provider/course links point to each organization's general official page, not necessarily one specific exam or course — please confirm on their site. This is a demonstration prototype; CV analysis uses rule-based heuristics, not a trained AI model.</p>
+    <div class="about-card">
+      <h3>🧭 من نحن؟</h3>
+      <p>MyPath منصة تجريبية تفاعلية تساعد الخريجين وطلاب التقنية في المملكة على اكتشاف مسارهم المهني المناسب، عبر بناء خارطة طريق واقعية من الشهادات والدورات المعتمدة المدعومة من صندوق تنمية الموارد البشرية (هدف)، إلى جانب مدرب ذكي لتقييم السيرة الذاتية. هذا المشروع نموذج توضيحي (Prototype) غير رسمي وغير تابع لأي جهة حكومية، صُمم لتسهيل الوصول للمعلومة وتحفيز التطوير المهني.</p>
+    </div>
+    <div class="brand" style="margin-top:1.2rem;"><span>🧭</span> MyPath · بوصلتي المهنية</div>
+    <p>المصدر: «دليل الشهادات المهنية الاحترافية المدعومة في قطاع الاتصالات وتقنية المعلومات» — النسخة الثانية 2025، الصادر عن المؤسسة العامة للتدريب التقني والمهني وصندوق تنمية الموارد البشرية (هدف). الأسعار الموضحة تمثل الحد الأعلى للتعويض ضمن منتج دعم الشهادات المهنية الاحترافية، وهي عرضة للتحديث الدوري — يرجى مراجعة الدليل الرسمي ومنصة «هدف» للتفاصيل والتسجيل. روابط الجهات المانحة والدورات تُحيل إلى صفحاتها الرسمية العامة، وليست بالضرورة رابطًا مباشرًا لاختبار أو دورة بعينها — تأكدي من التفاصيل الدقيقة عبر موقع كل جهة. هذا الموقع نموذج توضيحي، وتحليل السيرة الذاتية مبني على قواعد استرشادية وقراءة نصية آلية للملف، وليس نظام ذكاء اصطناعي مُدرَّب.</p>
   </div>
 </footer>
 
@@ -146,9 +139,9 @@ function renderCatPicker(){
     const c = CATS[k];
     return `<button class="choice-card" data-cat="${k}">
       <span class="ico">${c.icon}</span>
-      <h3>${c.label} <span class="en-inline" style="display:block;">${c.labelEn}</span></h3>
-      <p>${c.blurb} <span class="en-line">${c.blurbEn}</span></p>
-      <span class="go">${c.certs.length} شهادة · ${c.certs.length} certs ←</span>
+      <h3>${c.label}</h3>
+      <p>${c.blurb}</p>
+      <span class="go">${c.certs.length} شهادة ←</span>
     </button>`;
   }).join("");
   grid.querySelectorAll("[data-cat]").forEach(btn=>{ btn.addEventListener("click", ()=> goToRoadmap(btn.dataset.cat)); });
@@ -158,11 +151,10 @@ function startQuiz(){ state.qIndex = 0; state.answers = []; show("panelQuiz"); r
 function renderQuizStep(){
   const i = state.qIndex, total = QUIZ.length, step = QUIZ[i];
   $("#quizProgress").innerHTML = QUIZ.map((_,idx)=>`<i class="${idx<i?'done':''}"></i>`).join("");
-  $("#quizQNum").textContent = "السؤال " + (i+1) + " / " + total + " · Question " + (i+1) + " of " + total;
-  $("#quizQTitle").innerHTML = step.q[0] + '<span class="en-line">' + step.q[1] + '</span>';
+  $("#quizQNum").textContent = "السؤال " + (i+1) + " من " + total;
+  $("#quizQTitle").textContent = step.q[0];
   $("#quizOpts").innerHTML = step.opts.map((o,idx)=>`
-    <button class="quiz-opt" data-idx="${idx}"><span class="bullet">${String.fromCharCode(65+idx)}</span>
-      <span class="txt"><span>${o.t[0]}</span><span class="en-inline">${o.t[1]}</span></span></button>
+    <button class="quiz-opt" data-idx="${idx}"><span class="bullet">${String.fromCharCode(65+idx)}</span><span class="txt"><span>${o.t[0]}</span></span></button>
   `).join("");
   $("#quizStepLabel").textContent = (i+1)+" / "+total;
   $("#quizBack").style.visibility = i===0 ? "hidden":"visible";
@@ -186,7 +178,7 @@ function renderResults(scores){
   $("#resultsBars").innerHTML = ranked.map((k,idx)=>{
     const c = CATS[k]; const pct = Math.round((scores[k]/max)*100); const isTop = idx<3;
     return `<div class="bar-row">
-      <span class="lbl"><span>${c.icon} ${c.label}</span><span class="en-inline">${c.labelEn}</span></span>
+      <span class="lbl"><span>${c.icon} ${c.label}</span></span>
       <span class="bar-track"><span class="bar-fill" style="width:0%; background:${isTop?'var(--gold)':'var(--teal)'}" data-w="${pct}"></span></span>
       <span class="pct num">${pct}%</span>
     </div>`;
@@ -196,10 +188,10 @@ function renderResults(scores){
   $("#topPicks").innerHTML = top3.map((k,idx)=>{
     const c = CATS[k]; const pct = Math.round((scores[k]/max)*100);
     return `<button class="pick-card" data-cat="${k}">
-      <span class="rank">التوافق ${idx+1} · Match ${idx+1}</span>
-      <h4>${c.icon} ${c.label}<span class="en-inline" style="display:block;">${c.labelEn}</span></h4>
-      <span class="match">نسبة التوافق · Match: <b class="num">${pct}%</b></span>
-      <span class="go" style="color:var(--gold-strong,var(--gold)); font-weight:700; font-size:.85rem; margin-top:.3rem;">ابنِ خارطة الطريق · Build roadmap ←</span>
+      <span class="rank">التوافق رقم ${idx+1}</span>
+      <h4>${c.icon} ${c.label}</h4>
+      <span class="match">نسبة التوافق: <b class="num">${pct}%</b></span>
+      <span class="go" style="color:var(--gold-strong,var(--gold)); font-weight:700; font-size:.85rem; margin-top:.3rem;">ابنِ خارطة الطريق ←</span>
     </button>`;
   }).join("");
   $$("#topPicks [data-cat]").forEach(btn=> btn.addEventListener("click", ()=> goToRoadmap(btn.dataset.cat)));

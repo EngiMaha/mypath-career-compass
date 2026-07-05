@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0E7B6C">
-<title>مدرب السيرة الذاتية · CV Coach — MyPath</title>
+<title>مدرب السيرة الذاتية — MyPath</title>
 <meta name="description" content="ارفع سيرتك الذاتية بصيغة PDF أو Word واحصل على تحليل فوري بأسلوب ATS مع نصائح قابلة للتنفيذ.">
 <link rel="stylesheet" href="assets/styles.css">
 
@@ -11,44 +11,56 @@
   <div class="wrap">
     <a href="index.html" class="brand"><span class="mark">🧭</span> MyPath <span style="color:var(--ink-faint); font-weight:400; font-size:.85rem;">· بوصلتي المهنية</span></a>
     <div class="navlinks" id="navLinks">
-      <a href="index.html">الرئيسية<span class="en-inline">Home</span></a>
-      <a href="index.html#wizard">اختبر مسارك<span class="en-inline">Path Quiz</span></a>
-      <a href="courses.html">الدورات المجانية<span class="en-inline">Free Courses</span></a>
-      <a href="cv-coach.html">مدرب السيرة الذاتية<span class="en-inline">CV Coach</span></a>
-      <a href="catalog.html">دليل الشهادات<span class="en-inline">Certifications</span></a>
+      <a href="index.html">الرئيسية</a>
+      <a href="index.html#wizard">اختبر مسارك</a>
+      <a href="courses.html">الدورات المجانية</a>
+      <a href="cv-coach.html">مدرب السيرة الذاتية</a>
+      <a href="catalog.html">دليل الشهادات</a>
     </div>
     <div class="nav-actions">
-      <button class="nav-toggle" id="navToggle" aria-label="Menu · القائمة" aria-expanded="false">☰</button>
-      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme · تبديل المظهر">🌗</button>
+      <button class="nav-toggle" id="navToggle" aria-label="القائمة" aria-expanded="false">☰</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">🌗</button>
     </div>
   </div>
 </nav>
 
 <div class="wrap page-hero">
-  <span class="eyebrow">Smart coach · المدرب الذكي</span>
-  <h1>هل سيرتك الذاتية جاهزة؟ <span class="en-line">Is your CV ready?</span></h1>
-  <p>ارفع ملف سيرتك الذاتية بصيغة <b>PDF</b> أو <b>Word (.docx)</b> واختر المجال المستهدف — سنحلّلها وفق معايير أساسية شائعة في أنظمة الفرز الآلي (ATS)، مع نصائح فورية قابلة للتنفيذ.
-    <span class="en-line">Upload your CV as PDF or Word (.docx), pick your target field, and get instant, actionable ATS-style feedback.</span></p>
+  <span class="eyebrow">المدرب الذكي</span>
+  <h1>هل سيرتك الذاتية جاهزة؟</h1>
+  <p>ارفع ملف سيرتك الذاتية بصيغة <b>PDF</b> أو <b>Word (.docx)</b> واختر المجال المستهدف — سنحلّلها وفق معايير أساسية شائعة في أنظمة الفرز الآلي (ATS)، مع نصائح فورية قابلة للتنفيذ.</p>
 </div>
 
 <section class="section">
   <div class="wrap">
     <div class="cv-shell">
       <div class="cv-input">
-        <label class="field-label" for="cvTarget">المجال المستهدف <span class="en-inline">Target field</span></label>
+        <div class="terms-box">
+          <h3>📋 الشروط والأحكام وتنبيه الخصوصية</h3>
+          <ul>
+            <li>تعمل هذه الأداة بالكامل داخل متصفحك؛ ملفك لا يُرفع إلى أي خادم ولا يُحتفظ بأي نسخة منه.</li>
+            <li>النتائج مبنية على قواعد استرشادية آلية، وليست نصيحة مهنية معتمدة أو قرارًا نهائيًا من أي جهة توظيف.</li>
+            <li>أنتِ المسؤولة الوحيدة عن صحة ودقة البيانات الواردة في ملفك، وعن أي قرار تتخذينه بناءً على نتيجة التحليل.</li>
+            <li>هذا الموقع نموذج تجريبي لأغراض العرض والتعلّم، وليس منتجًا رسميًا أو معتمدًا من أي جهة حكومية.</li>
+          </ul>
+          <label>
+            <input type="checkbox" id="termsCheck">
+            <span>أقر بأنني قرأت الشروط والأحكام وتنبيه الخصوصية أعلاه وأوافق عليها.</span>
+          </label>
+        </div>
+
+        <label class="field-label" for="cvTarget" style="margin-top:.4rem;">المجال المستهدف</label>
         <select id="cvTarget"></select>
-        <label class="field-label">ملف السيرة الذاتية <span class="en-inline">CV file</span></label>
-        <div class="file-drop" id="fileDrop" tabindex="0" role="button">
+        <label class="field-label">ملف السيرة الذاتية</label>
+        <div class="file-drop disabled" id="fileDrop" tabindex="0" role="button">
           <span class="ico">📄</span>
-          <span id="fileDropLabel">اضغط أو اسحب ملفك هنا<br><span class="en-inline">Click or drop your file here</span></span>
+          <span id="fileDropLabel">وافقي على الشروط أعلاه أولًا لتفعيل الرفع</span>
           <input type="file" id="cvFile" accept=".pdf,.doc,.docx">
         </div>
-        <p class="file-formats">الصيغ المدعومة: PDF · DOCX (Word) — الصيغة القديمة .doc غير مدعومة للتحليل التلقائي.<br>
-          <span class="en-inline">Supported: PDF, DOCX (Word). Legacy .doc is not supported for auto-analysis.</span></p>
-        <button class="btn btn-teal" id="cvAnalyze" style="align-self:flex-start;"><span>حلّل سيرتي الذاتية 🔍</span><span class="en-inline">Analyze my CV 🔍</span></button>
+        <p class="file-formats">الصيغ المدعومة: PDF · DOCX (Word) — الصيغة القديمة .doc غير مدعومة للتحليل التلقائي.</p>
+        <button class="btn btn-teal" id="cvAnalyze" style="align-self:flex-start;" disabled>حلّل سيرتي الذاتية 🔍</button>
       </div>
       <div class="cv-report" id="cvReport">
-        <div class="cv-empty">ارفع ملف PDF أو Word لتظهر نتيجة التحليل هنا.<span class="en-line">Upload a PDF or Word file to see your analysis here.</span></div>
+        <div class="cv-empty">وافقي على الشروط، ثم ارفعي ملف PDF أو Word لتظهر نتيجة التحليل هنا.</div>
       </div>
     </div>
   </div>
@@ -56,9 +68,12 @@
 
 <footer>
   <div class="wrap">
-    <div class="brand"><span>🧭</span> MyPath · بوصلتي المهنية</div>
+    <div class="about-card">
+      <h3>🧭 من نحن؟</h3>
+      <p>MyPath منصة تجريبية تفاعلية تساعد الخريجين وطلاب التقنية في المملكة على اكتشاف مسارهم المهني المناسب، عبر بناء خارطة طريق واقعية من الشهادات والدورات المعتمدة المدعومة من صندوق تنمية الموارد البشرية (هدف)، إلى جانب مدرب ذكي لتقييم السيرة الذاتية. هذا المشروع نموذج توضيحي (Prototype) غير رسمي وغير تابع لأي جهة حكومية، صُمم لتسهيل الوصول للمعلومة وتحفيز التطوير المهني.</p>
+    </div>
+    <div class="brand" style="margin-top:1.2rem;"><span>🧭</span> MyPath · بوصلتي المهنية</div>
     <p>هذا التحليل مبني على قواعد استرشادية وقراءة نصية آلية للملف تعمل بالكامل داخل متصفحك (لا يُرفع ملفك لأي خادم)، وليس نظام ذكاء اصطناعي مُدرَّب — وقد لا ينجح استخراج النص من بعض ملفات PDF ذات الخطوط المضمّنة المعقدة، خصوصًا في بعض السير المصممة بالعربية.</p>
-    <p class="en-line">This analysis uses rule-based heuristics and automated text extraction that runs entirely in your browser (your file is never uploaded anywhere) — not a trained AI model. Text extraction may fail on some PDFs with complex embedded fonts, especially certain Arabic-designed CVs.</p>
   </div>
 </footer>
 
@@ -70,7 +85,7 @@
 
 const state = { cvFile:null };
 
-$("#cvTarget").innerHTML = CAT_KEYS.map(k=>`<option value="${k}">${CATS[k].icon} ${CATS[k].label} · ${CATS[k].labelEn}</option>`).join("");
+$("#cvTarget").innerHTML = CAT_KEYS.map(k=>`<option value="${k}">${CATS[k].icon} ${CATS[k].label}</option>`).join("");
 const presetCat = new URLSearchParams(location.search).get("cat");
 if(presetCat && CATS[presetCat]) $("#cvTarget").value = presetCat;
 
@@ -109,48 +124,45 @@ function analyzeCV(text, catKey){
   if(wc < 80) lengthScore = 2; else if(wc < 150) lengthScore = 6; else if(wc > 1400) lengthScore = 6;
   const total = Math.round(contactScore + sectionsScore + verbsScore + numScore + kwScore + lengthScore);
   const score = Math.max(0, Math.min(100, total));
+  const kwList = kw.slice(0,4).join("، ");
   const items = [
-    {ok: hasEmail && hasPhone, warn: hasEmail || hasPhone, title:["بيانات التواصل","Contact info"],
-      pass:["وجدنا بريدًا إلكترونيًا ورقم تواصل بوضوح.","We found both an email and a phone number."],
-      warnTx:["وجدنا وسيلة تواصل واحدة فقط — أضف البريد ورقم الجوال معًا.","Only one contact method found — add both email and phone."],
-      fail:["لم نعثر على بريد إلكتروني أو رقم جوال — أضفهما في أعلى السيرة.","No email or phone found — add both near the top of your CV."]},
-    {ok: sectionsFound.length>=3, warn: sectionsFound.length>=1, title:["أقسام واضحة","Clear sections"],
-      pass:["السيرة منظمة بأقسام واضحة (خبرة، تعليم، مهارات...).","Your CV has clear sections (experience, education, skills...)."],
-      warnTx:["أقسام قليلة فقط — أضف عناوين صريحة مثل «الخبرات» و«المهارات».","Few sections found — add explicit headings like Experience and Skills."],
-      fail:["لا توجد عناوين أقسام واضحة — قسّم سيرتك إلى ملخص/خبرات/تعليم/مهارات.","No clear section headings — split into Summary/Experience/Education/Skills."]},
-    {ok: verbsFound.length>=4, warn: verbsFound.length>=1, title:["أفعال إنجاز قوية","Strong action verbs"],
-      pass:["تستخدم أفعالًا قوية مثل «طوّرت» و«قدت» تصف إنجازاتك بفعالية.","You use strong verbs like Developed/Led to describe achievements."],
-      warnTx:["استخدم أفعال إنجاز إضافية (طوّرت، حسّنت، قدت) بدل الجمل العامة.","Use more action verbs (Developed, Improved, Led) instead of generic phrasing."],
-      fail:["ابدأ كل نقطة بفعل إنجاز قوي بدل عبارات مثل «مسؤول عن...».","Start each bullet with a strong verb instead of \"Responsible for...\"."]},
-    {ok: numMatches>=3, warn: numMatches>=1, title:["إنجازات مقيّسة بالأرقام","Quantified achievements"],
-      pass:["تُظهر سيرتك أرقامًا ونتائج ملموسة (نسب، أعداد).","Your CV shows concrete numbers and results (percentages, counts)."],
-      warnTx:["أضف مزيدًا من الأرقام (%، عدد المستخدمين، المدة) لتقوية مصداقيتك.","Add more numbers (%, user counts, timeframes) to strengthen credibility."],
-      fail:["لا توجد أرقام أو نسب — حوّل «حسّنت الأداء» إلى «حسّنت الأداء 30%».","No numbers found — turn \"Improved performance\" into \"Improved performance by 30%\"."]},
-    {ok: kwFound.length>=3, warn: kwFound.length>=1, title:["مطابقة كلمات المجال","Field keyword match"],
-      pass:["سيرتك تحتوي على كلمات مفتاحية مهمة لهذا المجال.","Your CV contains important keywords for this field."],
-      warnTx:["أضف مصطلحات أكثر ارتباطًا بهذا المجال، مثل: __KW__.","Add more field-related terms, such as: __KW__."],
-      fail:["لا توجد كلمات مفتاحية مرتبطة بهذا المجال — أضف مهاراتك وأدواتك صراحة، مثل: __KW__.","No field-related keywords — add your relevant skills/tools explicitly, e.g.: __KW__."]},
-    {ok: wc>=150 && wc<=1200, warn: wc>=80, title:["طول مناسب","Appropriate length"],
-      pass:["طول السيرة ضمن المدى المناسب.","CV length is within a good range."],
-      warnTx:["السيرة قصيرة نسبيًا — فصّل خبراتك وإنجازاتك أكثر.","CV is a bit short — elaborate more on your experience."],
-      fail:["السيرة قصيرة جدًا أو طويلة جدًا — استهدف 300-800 كلمة تقريبًا.","CV is too short or too long — aim for roughly 300-800 words."]}
+    {ok: hasEmail && hasPhone, warn: hasEmail || hasPhone, title:"بيانات التواصل",
+      pass:"وجدنا بريدًا إلكترونيًا ورقم تواصل بوضوح.",
+      warnTx:"وجدنا وسيلة تواصل واحدة فقط — أضف البريد ورقم الجوال معًا.",
+      fail:"لم نعثر على بريد إلكتروني أو رقم جوال — أضفهما في أعلى السيرة."},
+    {ok: sectionsFound.length>=3, warn: sectionsFound.length>=1, title:"أقسام واضحة",
+      pass:"السيرة منظمة بأقسام واضحة (خبرة، تعليم، مهارات...).",
+      warnTx:"أقسام قليلة فقط — أضف عناوين صريحة مثل «الخبرات» و«المهارات».",
+      fail:"لا توجد عناوين أقسام واضحة — قسّم سيرتك إلى ملخص/خبرات/تعليم/مهارات."},
+    {ok: verbsFound.length>=4, warn: verbsFound.length>=1, title:"أفعال إنجاز قوية",
+      pass:"تستخدم أفعالًا قوية مثل «طوّرت» و«قدت» تصف إنجازاتك بفعالية.",
+      warnTx:"استخدم أفعال إنجاز إضافية (طوّرت، حسّنت، قدت) بدل الجمل العامة.",
+      fail:"ابدأ كل نقطة بفعل إنجاز قوي بدل عبارات مثل «مسؤول عن...»."},
+    {ok: numMatches>=3, warn: numMatches>=1, title:"إنجازات مقيّسة بالأرقام",
+      pass:"تُظهر سيرتك أرقامًا ونتائج ملموسة (نسب، أعداد).",
+      warnTx:"أضف مزيدًا من الأرقام (%، عدد المستخدمين، المدة) لتقوية مصداقيتك.",
+      fail:"لا توجد أرقام أو نسب — حوّل «حسّنت الأداء» إلى «حسّنت الأداء 30%»."},
+    {ok: kwFound.length>=3, warn: kwFound.length>=1, title:"مطابقة كلمات المجال ("+CATS[catKey].label+")",
+      pass:"سيرتك تحتوي على كلمات مفتاحية مهمة لهذا المجال.",
+      warnTx:"أضف مصطلحات أكثر ارتباطًا بهذا المجال، مثل: "+kwList+".",
+      fail:"لا توجد كلمات مفتاحية مرتبطة بهذا المجال — أضف مهاراتك وأدواتك صراحة، مثل: "+kwList+"."},
+    {ok: wc>=150 && wc<=1200, warn: wc>=80, title:"طول مناسب",
+      pass:"طول السيرة ضمن المدى المناسب.",
+      warnTx:"السيرة قصيرة نسبيًا — فصّل خبراتك وإنجازاتك أكثر.",
+      fail:"السيرة قصيرة جدًا أو طويلة جدًا — استهدف 300-800 كلمة تقريبًا."}
   ];
-  const kwList = kw.slice(0,4).join(", ");
-  items[4].warnTx[0] = items[4].warnTx[0].replace("__KW__", kwList); items[4].warnTx[1] = items[4].warnTx[1].replace("__KW__", kwList);
-  items[4].fail[0] = items[4].fail[0].replace("__KW__", kwList); items[4].fail[1] = items[4].fail[1].replace("__KW__", kwList);
-  items[4].title[0] += " (" + CATS[catKey].label + ")"; items[4].title[1] += " (" + CATS[catKey].labelEn + ")";
   return {score, items, wc};
 }
 
 function renderCvReport(text, catKey){
   const {score, items} = analyzeCV(text, catKey);
-  const status = score>=75 ? {c:"good",l:["جيدة جدًا","Very good"]} : score>=50 ? {c:"warn",l:["تحتاج تحسينًا","Needs work"]} : {c:"bad",l:["تحتاج عملًا إضافيًا","Needs significant work"]};
+  const status = score>=75 ? {c:"good",l:"جيدة جدًا"} : score>=50 ? {c:"warn",l:"تحتاج تحسينًا"} : {c:"bad",l:"تحتاج عملًا إضافيًا"};
   let html = `<div class="score-tile">
     <div class="num-big" style="color:var(--${status.c})">${score}</div>
     <div class="score-meta">
-      <span class="score-tag" style="color:var(--${status.c})">${status.l[0]}<span class="en-inline">${status.l[1]}</span></span>
+      <span class="score-tag" style="color:var(--${status.c})">${status.l}</span>
       <div class="score-track"><div class="score-fill" style="width:0%; background:var(--${status.c})" data-w="${score}"></div></div>
-      <span style="font-size:.76rem; color:var(--ink-faint);">من 100 وفق 6 معايير أساسية شائعة في أنظمة الفرز الآلي (ATS)<span class="en-line">out of 100, based on 6 criteria common in ATS systems</span></span>
+      <span style="font-size:.76rem; color:var(--ink-faint);">من 100 وفق 6 معايير أساسية شائعة في أنظمة الفرز الآلي (ATS)</span>
     </div>
   </div><div class="check-list">`;
   items.forEach(it=>{
@@ -158,16 +170,15 @@ function renderCvReport(text, catKey){
     const icon = it.ok ? "✓" : it.warn ? "!" : "✕";
     const t = it.ok ? it.pass : it.warn ? it.warnTx : it.fail;
     html += `<div class="check-item"><span class="check-ic" style="background:var(--${st})">${icon}</span>
-      <div><h5>${it.title[0]}<span class="en-inline">${it.title[1]}</span></h5><p>${t[0]}<span class="en-line">${t[1]}</span></p></div></div>`;
+      <div><h5>${it.title}</h5><p>${t}</p></div></div>`;
   });
   html += `</div>`;
   const cat = CATS[catKey]; const cheapPick = cat.certs.slice().sort((a,b)=>a.c-b.c)[0];
   html += `<div class="check-item" style="border-color:var(--gold); background:var(--gold-soft);">
     <span class="check-ic" style="background:var(--gold)">★</span>
-    <div><h5>الخطوة التالية <span class="en-inline">Next step</span></h5>
+    <div><h5>الخطوة التالية</h5>
     <p>أضف على سيرتك أنك بصدد الحصول على «${cheapPick.n}» (${cheapPick.p}) — خطوة تأسيسية معترف بها في مجال ${cat.label} تُظهر جديتك لأصحاب العمل.
-      <span class="en-line">Add that you're pursuing "${cheapPick.e}" (${cheapPick.p}) — a recognized foundational step in ${cat.labelEn}.</span>
-      <a href="roadmap.html?cat=${catKey}" style="color:var(--gold-strong,var(--gold)); font-weight:700;">شاهد خارطة الطريق الكاملة · Full roadmap ←</a></p></div>
+      <a href="roadmap.html?cat=${catKey}" style="color:var(--gold-strong,var(--gold)); font-weight:700;">شاهد خارطة الطريق الكاملة ←</a></p></div>
   </div>`;
   $("#cvReport").innerHTML = html;
   requestAnimationFrame(()=>{ setTimeout(()=>{ const f=$(".score-fill"); if(f) f.style.width = f.dataset.w+"%"; }, 30); });
@@ -265,38 +276,56 @@ function looksUsable(text){
   return (printable/text.length) > 0.6;
 }
 
-/* ---------- file input wiring ---------- */
+/* ---------- terms gate ---------- */
+const termsCheck = $("#termsCheck");
 const fileDrop = $("#fileDrop"), cvFileInput = $("#cvFile"), fileDropLabel = $("#fileDropLabel");
+const analyzeBtn = $("#cvAnalyze");
+function syncGate(){
+  const ok = termsCheck.checked;
+  analyzeBtn.disabled = !ok;
+  fileDrop.classList.toggle("disabled", !ok);
+  fileDropLabel.innerHTML = ok
+    ? (state.cvFile ? ('📎 ' + state.cvFile.name) : 'اضغطي أو اسحبي ملفك هنا')
+    : 'وافقي على الشروط أعلاه أولًا لتفعيل الرفع';
+}
+termsCheck.addEventListener("change", syncGate);
+syncGate();
+
+/* ---------- file input wiring ---------- */
 fileDrop.addEventListener("click", ()=> cvFileInput.click());
 fileDrop.addEventListener("keydown", (e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); cvFileInput.click(); } });
-["dragover","dragenter"].forEach(ev=> fileDrop.addEventListener(ev, (e)=>{ e.preventDefault(); fileDrop.classList.add("drag"); }));
+["dragover","dragenter"].forEach(ev=> fileDrop.addEventListener(ev, (e)=>{ e.preventDefault(); if(termsCheck.checked) fileDrop.classList.add("drag"); }));
 ["dragleave","drop"].forEach(ev=> fileDrop.addEventListener(ev, (e)=>{ e.preventDefault(); fileDrop.classList.remove("drag"); }));
-fileDrop.addEventListener("drop", (e)=>{ const f = e.dataTransfer.files[0]; if(f){ cvFileInput.files = e.dataTransfer.files; onFilePicked(f); } });
+fileDrop.addEventListener("drop", (e)=>{ if(!termsCheck.checked) return; const f = e.dataTransfer.files[0]; if(f){ cvFileInput.files = e.dataTransfer.files; onFilePicked(f); } });
 cvFileInput.addEventListener("change", (e)=>{ const f = e.target.files[0]; if(f) onFilePicked(f); });
 function onFilePicked(file){
   state.cvFile = file;
-  fileDropLabel.innerHTML = '📎 ' + file.name + '<br><span class="en-inline">Ready to analyze</span>';
+  fileDropLabel.innerHTML = '📎 ' + file.name;
 }
 
-$("#cvAnalyze").addEventListener("click", async ()=>{
+analyzeBtn.addEventListener("click", async ()=>{
+  if(!termsCheck.checked){
+    renderCvMessage('يرجى الموافقة على الشروط والأحكام أولًا.');
+    return;
+  }
   const file = state.cvFile; const catKey = $("#cvTarget").value;
   if(!file){
-    renderCvMessage('يرجى اختيار ملف PDF أو Word أولًا.<span class="en-line">Please choose a PDF or Word file first.</span>');
+    renderCvMessage('يرجى اختيار ملف PDF أو Word أولًا.');
     return;
   }
   const name = file.name.toLowerCase(); const ext = name.split('.').pop();
-  renderCvMessage('⏳ جارٍ قراءة الملف وتحليله...<span class="en-line">Reading and analyzing your file...</span>');
+  renderCvMessage('⏳ جارٍ قراءة الملف وتحليله...');
   try{
     if(ext === 'doc'){
-      renderCvMessage('صيغة Word القديمة (.doc) غير قابلة للقراءة تلقائيًا في المتصفح. يرجى فتح الملف في Word وحفظه بصيغة <b>.docx</b> ثم إعادة الرفع، أو تصديره كـ PDF.<span class="en-line">Legacy .doc files cannot be read in-browser. Please re-save as <b>.docx</b> in Word, or export as PDF, then re-upload.</span>');
+      renderCvMessage('صيغة Word القديمة (.doc) غير قابلة للقراءة تلقائيًا في المتصفح. يرجى فتح الملف في Word وحفظه بصيغة <b>.docx</b> ثم إعادة الرفع، أو تصديره كـ PDF.');
       return;
     }
     if(ext !== 'pdf' && ext !== 'docx'){
-      renderCvMessage('صيغة غير مدعومة. يرجى رفع ملف بصيغة PDF أو DOCX فقط.<span class="en-line">Unsupported format. Please upload a PDF or DOCX file only.</span>');
+      renderCvMessage('صيغة غير مدعومة. يرجى رفع ملف بصيغة PDF أو DOCX فقط.');
       return;
     }
     if(typeof DecompressionStream === 'undefined'){
-      renderCvMessage('متصفحك الحالي لا يدعم فك ضغط الملفات المطلوب لقراءة PDF/Word. جرّبي متصفحًا حديثًا مثل Chrome أو Edge.<span class="en-line">Your browser lacks the decompression support needed to read PDF/Word files. Try a recent Chrome or Edge.</span>');
+      renderCvMessage('متصفحك الحالي لا يدعم فك ضغط الملفات المطلوب لقراءة PDF/Word. جرّبي متصفحًا حديثًا مثل Chrome أو Edge.');
       return;
     }
     const buf = await file.arrayBuffer();
@@ -306,17 +335,17 @@ $("#cvAnalyze").addEventListener("click", async ()=>{
     } else {
       text = await extractPdfText(buf);
       if(!looksUsable(text)){
-        renderCvMessage('تعذّر استخراج نص كافٍ من ملف PDF هذا تلقائيًا — غالبًا بسبب خطوط مضمّنة معقّدة (شائع في بعض السير المصممة بالعربية). جرّبي رفع نسخة <b>Word (.docx)</b> للحصول على تحليل دقيق.<span class="en-line">Could not extract enough text from this PDF automatically (often due to complex embedded fonts). Please upload a <b>Word (.docx)</b> version for accurate analysis.</span>');
+        renderCvMessage('تعذّر استخراج نص كافٍ من ملف PDF هذا تلقائيًا — غالبًا بسبب خطوط مضمّنة معقّدة (شائع في بعض السير المصممة بالعربية). جرّبي رفع نسخة <b>Word (.docx)</b> للحصول على تحليل دقيق.');
         return;
       }
     }
     if(!text || text.trim().length < 20){
-      renderCvMessage('الملف يبدو فارغًا أو غير قابل للقراءة. جرّبي ملفًا آخر.<span class="en-line">The file appears empty or unreadable. Please try another file.</span>');
+      renderCvMessage('الملف يبدو فارغًا أو غير قابل للقراءة. جرّبي ملفًا آخر.');
       return;
     }
     renderCvReport(text, catKey);
   } catch(err){
-    renderCvMessage('حدث خطأ أثناء قراءة الملف. تأكدي أنه غير محمي بكلمة مرور وأعيدي المحاولة.<span class="en-line">Something went wrong reading the file. Make sure it is not password-protected and try again.</span>');
+    renderCvMessage('حدث خطأ أثناء قراءة الملف. تأكدي أنه غير محمي بكلمة مرور وأعيدي المحاولة.');
   }
 });
 
