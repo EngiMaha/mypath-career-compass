@@ -39,7 +39,7 @@
           <ul>
             <li>تعمل هذه الأداة بالكامل داخل متصفحك؛ ملفك لا يُرفع إلى أي خادم ولا يُحتفظ بأي نسخة منه.</li>
             <li>النتائج مبنية على قواعد استرشادية آلية، وليست نصيحة مهنية معتمدة أو قرارًا نهائيًا من أي جهة توظيف.</li>
-            <li>أنتِ المسؤولة الوحيدة عن صحة ودقة البيانات الواردة في ملفك، وعن أي قرار تتخذينه بناءً على نتيجة التحليل.</li>
+            <li>أنت المسؤول الوحيد عن صحة ودقة البيانات الواردة في ملفك، وعن أي قرار تتخذه بناءً على نتيجة التحليل.</li>
             <li>هذا الموقع نموذج تجريبي لأغراض العرض والتعلّم، وليس منتجًا رسميًا أو معتمدًا من أي جهة حكومية.</li>
           </ul>
           <label>
@@ -53,14 +53,14 @@
         <label class="field-label">ملف السيرة الذاتية</label>
         <div class="file-drop disabled" id="fileDrop" tabindex="0" role="button">
           <span class="ico">📄</span>
-          <span id="fileDropLabel">وافقي على الشروط أعلاه أولًا لتفعيل الرفع</span>
+          <span id="fileDropLabel">وافق على الشروط أعلاه أولًا لتفعيل الرفع</span>
           <input type="file" id="cvFile" accept=".pdf,.doc,.docx">
         </div>
         <p class="file-formats">الصيغ المدعومة: PDF · DOCX (Word) — الصيغة القديمة .doc غير مدعومة للتحليل التلقائي.</p>
         <button class="btn btn-teal" id="cvAnalyze" style="align-self:flex-start;" disabled>حلّل سيرتي الذاتية 🔍</button>
       </div>
       <div class="cv-report" id="cvReport">
-        <div class="cv-empty">وافقي على الشروط، ثم ارفعي ملف PDF أو Word لتظهر نتيجة التحليل هنا.</div>
+        <div class="cv-empty">وافق على الشروط، ثم ارفع ملف PDF أو Word لتظهر نتيجة التحليل هنا.</div>
       </div>
     </div>
   </div>
@@ -285,8 +285,8 @@ function syncGate(){
   analyzeBtn.disabled = !ok;
   fileDrop.classList.toggle("disabled", !ok);
   fileDropLabel.innerHTML = ok
-    ? (state.cvFile ? ('📎 ' + state.cvFile.name) : 'اضغطي أو اسحبي ملفك هنا')
-    : 'وافقي على الشروط أعلاه أولًا لتفعيل الرفع';
+    ? (state.cvFile ? ('📎 ' + state.cvFile.name) : 'اضغط أو اسحب ملفك هنا')
+    : 'وافق على الشروط أعلاه أولًا لتفعيل الرفع';
 }
 termsCheck.addEventListener("change", syncGate);
 syncGate();
@@ -325,7 +325,7 @@ analyzeBtn.addEventListener("click", async ()=>{
       return;
     }
     if(typeof DecompressionStream === 'undefined'){
-      renderCvMessage('متصفحك الحالي لا يدعم فك ضغط الملفات المطلوب لقراءة PDF/Word. جرّبي متصفحًا حديثًا مثل Chrome أو Edge.');
+      renderCvMessage('متصفحك الحالي لا يدعم فك ضغط الملفات المطلوب لقراءة PDF/Word. جرّب متصفحًا حديثًا مثل Chrome أو Edge.');
       return;
     }
     const buf = await file.arrayBuffer();
@@ -335,17 +335,17 @@ analyzeBtn.addEventListener("click", async ()=>{
     } else {
       text = await extractPdfText(buf);
       if(!looksUsable(text)){
-        renderCvMessage('تعذّر استخراج نص كافٍ من ملف PDF هذا تلقائيًا — غالبًا بسبب خطوط مضمّنة معقّدة (شائع في بعض السير المصممة بالعربية). جرّبي رفع نسخة <b>Word (.docx)</b> للحصول على تحليل دقيق.');
+        renderCvMessage('تعذّر استخراج نص كافٍ من ملف PDF هذا تلقائيًا — غالبًا بسبب خطوط مضمّنة معقّدة (شائع في بعض السير المصممة بالعربية). جرّب رفع نسخة <b>Word (.docx)</b> للحصول على تحليل دقيق.');
         return;
       }
     }
     if(!text || text.trim().length < 20){
-      renderCvMessage('الملف يبدو فارغًا أو غير قابل للقراءة. جرّبي ملفًا آخر.');
+      renderCvMessage('الملف يبدو فارغًا أو غير قابل للقراءة. جرّب ملفًا آخر.');
       return;
     }
     renderCvReport(text, catKey);
   } catch(err){
-    renderCvMessage('حدث خطأ أثناء قراءة الملف. تأكدي أنه غير محمي بكلمة مرور وأعيدي المحاولة.');
+    renderCvMessage('حدث خطأ أثناء قراءة الملف. تأكد أنه غير محمي بكلمة مرور وأعد المحاولة.');
   }
 });
 
