@@ -70,7 +70,7 @@ function scrollToId(id){
       navLinksEl.classList.remove("open"); navToggle.setAttribute("aria-expanded","false"); navToggle.textContent = "☰";
     }));
     const page = (location.pathname.split("/").pop() || "index.html");
-    $$("#navLinks a").forEach(a=>{
+    $$("#navLinks a, .mobile-quicknav a").forEach(a=>{
       const target = (a.getAttribute("href")||"").split("#")[0] || "index.html";
       if(target === page) a.classList.add("active");
     });
