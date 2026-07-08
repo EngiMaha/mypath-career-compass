@@ -19,8 +19,13 @@ create table if not exists page_views (
   path text not null,
   referrer text,
   device text,
+  device_detail text,
   session_id text
 );
+
+-- Already ran this file before device_detail existed? This adds the column
+-- without touching your existing rows or policies. Safe to re-run anytime.
+alter table page_views add column if not exists device_detail text;
 
 alter table page_views enable row level security;
 

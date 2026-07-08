@@ -72,7 +72,7 @@
       <div class="budget-top"><span class="field-label">أحدث الزيارات</span></div>
       <div class="table-scroll">
         <table class="admin-table">
-          <thead><tr><th>الوقت</th><th>الصفحة</th><th>الجهاز</th><th>المصدر</th></tr></thead>
+          <thead><tr><th>الوقت</th><th>الصفحة</th><th>الجهاز</th><th>النظام والمتصفح</th><th>المصدر</th></tr></thead>
           <tbody id="recentRows"></tbody>
         </table>
       </div>
@@ -196,10 +196,12 @@ if(notConfigured || typeof supabase === "undefined"){
   }
 
   function renderRecent(rows){
+    const labelsAr = {desktop:"كمبيوتر", mobile:"جوال", tablet:"تابلت"};
     $("#recentRows").innerHTML = rows.map(r=>{
       const t = r.created_at ? new Date(r.created_at).toLocaleString("ar-SA", {dateStyle:"short", timeStyle:"short"}) : "—";
-      return `<tr><td class="num">${t}</td><td>${r.path||"—"}</td><td>${r.device||"—"}</td><td>${r.referrer||"مباشر"}</td></tr>`;
-    }).join("") || '<tr><td colspan="4" class="admin-note">لا توجد زيارات مسجّلة بعد.</td></tr>';
+      const deviceLbl = labelsAr[r.device] || r.device || "—";
+      return `<tr><td class="num">${t}</td><td>${r.path||"—"}</td><td>${deviceLbl}</td><td>${r.device_detail||"—"}</td><td>${r.referrer||"مباشر"}</td></tr>`;
+    }).join("") || '<tr><td colspan="5" class="admin-note">لا توجد زيارات مسجّلة بعد.</td></tr>';
   }
 }
 
