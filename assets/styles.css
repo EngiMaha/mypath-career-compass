@@ -371,12 +371,14 @@ p{margin:0;} ul{margin:0;padding:0;list-style:none;} button{font-family:inherit;
 .about-card[open] summary{margin-bottom:.6rem;}
 .about-card p{font-size:.85rem; color:var(--ink-muted);}
 .about-card h3{font-size:1.02rem; font-weight:700; margin-bottom:.8rem;}
-.contact-row{display:flex; gap:.8rem;}
+.contact-row{display:flex; flex-direction:column; gap:.7rem; width:fit-content;}
 .contact-icon{width:44px; height:44px; border-radius:50%; display:grid; place-items:center; border:1px solid var(--border-strong);
-  background:var(--surface); color:var(--ink); text-decoration:none; font-size:1.15rem; transition:transform .15s, border-color .15s, color .15s;}
+  background:var(--surface); color:var(--ink); text-decoration:none; transition:transform .15s, border-color .15s, color .15s;}
+.contact-icon svg{width:20px; height:20px;}
 .contact-icon:hover{transform:translateY(-2px); border-color:var(--teal); color:var(--teal);}
-.contact-icon.linkedin-icon{font-family:var(--font-m); font-weight:800; font-size:.92rem; background:#0A66C2; color:#fff; border-color:#0A66C2;}
-.contact-icon.linkedin-icon:hover{background:#004182; border-color:#004182; color:#fff;}
+.contact-icon.linkedin-icon{background:#0A66C2; border-color:#0A66C2;}
+.contact-icon.linkedin-icon svg{width:22px; height:22px;}
+.contact-icon.linkedin-icon:hover{background:#004182; border-color:#004182;}
 
 .terms-box{border:1px solid var(--border); border-radius:var(--radius-m); padding:1rem 1.1rem; background:var(--surface-2); display:flex; flex-direction:column; gap:.6rem;}
 .terms-box h3{font-size:.95rem;}
