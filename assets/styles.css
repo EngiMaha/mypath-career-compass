@@ -370,6 +370,8 @@ p{margin:0;} ul{margin:0;padding:0;list-style:none;} button{font-family:inherit;
 .about-card[open] summary::after{transform:rotate(45deg);}
 .about-card[open] summary{margin-bottom:.6rem;}
 .about-card p{font-size:.85rem; color:var(--ink-muted);}
+.about-card h3{font-size:1.02rem; font-weight:700; margin-bottom:.8rem;}
+.contact-row{display:flex; gap:.7rem; flex-wrap:wrap;}
 
 .terms-box{border:1px solid var(--border); border-radius:var(--radius-m); padding:1rem 1.1rem; background:var(--surface-2); display:flex; flex-direction:column; gap:.6rem;}
 .terms-box h3{font-size:.95rem;}
