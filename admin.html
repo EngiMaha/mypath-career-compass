@@ -1,0 +1,215 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0E7B6C">
+<meta name="robots" content="noindex, nofollow">
+<title>لوحة التحكم — MyPath</title>
+<link rel="stylesheet" href="assets/styles.css">
+
+<body dir="rtl" lang="ar">
+
+<nav class="topnav">
+  <div class="wrap">
+    <a href="index.html" class="brand"><span class="mark">🧭</span> MyPath <span style="color:var(--ink-faint); font-weight:400; font-size:.85rem;">· لوحة التحكم</span></a>
+    <div class="nav-actions">
+      <button class="btn btn-ghost btn-sm hidden" id="logoutBtn">تسجيل الخروج</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">🌗</button>
+    </div>
+  </div>
+</nav>
+
+<section class="section" id="loginSection">
+  <div class="wrap admin-shell">
+    <div class="section-head" style="text-align:center; align-items:center;">
+      <span class="eyebrow">دخول المسؤول</span>
+      <h2>لوحة تحكم MyPath</h2>
+      <p>هذه الصفحة خاصة بمالكة الموقع فقط. سجّلي الدخول بحساب المسؤول لعرض إحصائيات الزيارات.</p>
+    </div>
+    <div class="admin-card">
+      <label>البريد الإلكتروني
+        <input type="email" id="loginEmail" autocomplete="username" placeholder="admin@example.com">
+      </label>
+      <label>كلمة المرور
+        <input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••">
+      </label>
+      <div class="admin-error" id="loginError"></div>
+      <button class="btn btn-teal" id="loginBtn">دخول</button>
+      <p class="admin-note">لا يوجد تسجيل حساب جديد من هنا عمدًا — يُنشأ حساب المسؤول يدويًا من لوحة Supabase (Authentication → Users) لضمان أن الوصول للإحصائيات محصور بك وحدك.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section hidden" id="dashboardSection">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">إحصائيات الزيارات</span>
+      <h2>مرحبًا بك في لوحة التحكم</h2>
+      <p class="admin-note" id="scopeNote">مبنية على آخر 1000 زيارة مسجّلة (بيانات مجهولة تمامًا: لا IP ولا معلومات شخصية).</p>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-tile"><span class="num num-total">—</span><span class="lbl">إجمالي الزيارات المسجّلة (كل الوقت)</span></div>
+      <div class="stat-tile"><span class="num num-unique">—</span><span class="lbl">جلسات فريدة تقريبية</span></div>
+      <div class="stat-tile"><span class="num num-pages">—</span><span class="lbl">صفحات مختلفة تمت زيارتها</span></div>
+    </div>
+
+    <div class="budget-card">
+      <div class="budget-top"><span class="field-label">الزيارات آخر 14 يومًا</span></div>
+      <div class="daybar-row" id="dayChart"></div>
+    </div>
+
+    <div class="budget-card">
+      <div class="budget-top"><span class="field-label">توزيع الأجهزة</span></div>
+      <div class="budget-seg" id="deviceSeg"></div>
+      <div class="budget-legend" id="deviceLegend"></div>
+    </div>
+
+    <div class="budget-card">
+      <div class="budget-top"><span class="field-label">الصفحات الأكثر زيارة</span></div>
+      <div id="topPagesBars"></div>
+    </div>
+
+    <div class="budget-card">
+      <div class="budget-top"><span class="field-label">أحدث الزيارات</span></div>
+      <div class="table-scroll">
+        <table class="admin-table">
+          <thead><tr><th>الوقت</th><th>الصفحة</th><th>الجهاز</th><th>المصدر</th></tr></thead>
+          <tbody id="recentRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p>هذه الصفحة غير مربوطة بقائمة التصفح العامة، لكن الحماية الفعلية ليست إخفاء الرابط — بل أن قراءة البيانات محمية بتسجيل دخول حقيقي (Supabase Auth) وقواعد أمان على مستوى قاعدة البيانات (Row Level Security)، بحيث لا يمكن لأي زائر آخر رؤية الإحصائيات حتى لو عرف هذا الرابط.</p>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="assets/supabase-config.js"></script>
+<script>
+(function(){
+"use strict";
+const $ = (s,r=document)=>r.querySelector(s);
+
+const notConfigured = (typeof SUPABASE_URL === "undefined" || !SUPABASE_URL || SUPABASE_URL.indexOf("YOUR_") === 0);
+if(notConfigured || typeof supabase === "undefined"){
+  $("#loginSection .admin-card").innerHTML = '<p style="color:var(--bad); font-size:.9rem;">لم يتم إعداد Supabase بعد. أضيفي بيانات المشروع في <code>assets/supabase-config.js</code> ونفّذي <code>supabase/schema.sql</code> أولًا.</p>';
+} else {
+  const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  const loginSection = $("#loginSection"), dashSection = $("#dashboardSection"), logoutBtn = $("#logoutBtn");
+
+  function showDashboard(){
+    loginSection.classList.add("hidden");
+    dashSection.classList.remove("hidden");
+    logoutBtn.classList.remove("hidden");
+    loadStats();
+  }
+  function showLogin(){
+    dashSection.classList.add("hidden");
+    logoutBtn.classList.add("hidden");
+    loginSection.classList.remove("hidden");
+  }
+
+  $("#loginBtn").addEventListener("click", async ()=>{
+    const email = $("#loginEmail").value.trim();
+    const password = $("#loginPassword").value;
+    $("#loginError").textContent = "";
+    if(!email || !password){ $("#loginError").textContent = "أدخلي البريد وكلمة المرور."; return; }
+    const { error } = await client.auth.signInWithPassword({ email, password });
+    if(error){ $("#loginError").textContent = "بيانات الدخول غير صحيحة، أو الحساب غير موجود."; return; }
+    showDashboard();
+  });
+  $("#loginPassword").addEventListener("keydown", (e)=>{ if(e.key === "Enter") $("#loginBtn").click(); });
+
+  logoutBtn.addEventListener("click", async ()=>{ await client.auth.signOut(); showLogin(); });
+
+  client.auth.getSession().then(({data})=>{ if(data.session) showDashboard(); });
+
+  async function loadStats(){
+    const { count } = await client.from("page_views").select("*", { count: "exact", head: true });
+    $(".num-total").textContent = (count ?? 0).toLocaleString("en-US");
+
+    const { data: rows, error } = await client.from("page_views").select("*").order("created_at", { ascending:false }).limit(1000);
+    if(error || !rows){ return; }
+
+    const uniqueSessions = new Set(rows.map(r=>r.session_id)).size;
+    const uniquePages = new Set(rows.map(r=>r.path)).size;
+    $(".num-unique").textContent = uniqueSessions.toLocaleString("en-US");
+    $(".num-pages").textContent = uniquePages.toLocaleString("en-US");
+
+    renderDayChart(rows);
+    renderDeviceBreakdown(rows);
+    renderTopPages(rows);
+    renderRecent(rows.slice(0, 20));
+  }
+
+  function renderDayChart(rows){
+    const days = [];
+    for(let i=13;i>=0;i--){ const d = new Date(); d.setDate(d.getDate()-i); days.push(d.toISOString().slice(0,10)); }
+    const counts = Object.fromEntries(days.map(d=>[d,0]));
+    rows.forEach(r=>{ const day = (r.created_at||"").slice(0,10); if(day in counts) counts[day]++; });
+    const max = Math.max(1, ...Object.values(counts));
+    const todayStr = new Date().toISOString().slice(0,10);
+    $("#dayChart").innerHTML = days.map(d=>{
+      const v = counts[d]; const h = Math.max(2, Math.round((v/max)*100));
+      const label = d.slice(5).replace("-","/");
+      return `<div class="daybar ${d===todayStr?'top':''}" title="${d}: ${v}">
+        <div class="col" style="height:${h}%"></div>
+        <span class="d-label">${label}</span>
+      </div>`;
+    }).join("");
+  }
+
+  function renderDeviceBreakdown(rows){
+    const cats = ["desktop","mobile","tablet"];
+    const colors = {desktop:"teal", mobile:"gold", tablet:"violet"};
+    const labelsAr = {desktop:"كمبيوتر", mobile:"جوال", tablet:"تابلت"};
+    const total = rows.length || 1;
+    const counts = {desktop:0, mobile:0, tablet:0};
+    rows.forEach(r=>{ if(counts[r.device] !== undefined) counts[r.device]++; else counts.desktop++; });
+    $("#deviceSeg").innerHTML = cats.map(c=>{
+      const pct = Math.round((counts[c]/total)*100);
+      return pct>0 ? `<span style="width:${pct}%; background:var(--${colors[c]})"></span>` : "";
+    }).join("");
+    $("#deviceLegend").innerHTML = cats.map(c=>{
+      const pct = Math.round((counts[c]/total)*100);
+      return `<span class="k"><span class="sw" style="background:var(--${colors[c]})"></span>${labelsAr[c]}: <b class="num">${pct}%</b></span>`;
+    }).join("");
+  }
+
+  function renderTopPages(rows){
+    const counts = {};
+    rows.forEach(r=>{ counts[r.path] = (counts[r.path]||0) + 1; });
+    const ranked = Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,8);
+    const max = Math.max(1, ...ranked.map(r=>r[1]));
+    $("#topPagesBars").innerHTML = ranked.map(([path,n],idx)=>{
+      const pct = Math.round((n/max)*100);
+      return `<div class="bar-row">
+        <span class="lbl"><span>${path}</span></span>
+        <span class="bar-track"><span class="bar-fill" style="width:${pct}%; background:${idx===0?'var(--gold)':'var(--teal)'}"></span></span>
+        <span class="pct num">${n}</span>
+      </div>`;
+    }).join("") || '<p class="admin-note">لا توجد بيانات بعد.</p>';
+  }
+
+  function renderRecent(rows){
+    $("#recentRows").innerHTML = rows.map(r=>{
+      const t = r.created_at ? new Date(r.created_at).toLocaleString("ar-SA", {dateStyle:"short", timeStyle:"short"}) : "—";
+      return `<tr><td class="num">${t}</td><td>${r.path||"—"}</td><td>${r.device||"—"}</td><td>${r.referrer||"مباشر"}</td></tr>`;
+    }).join("") || '<tr><td colspan="4" class="admin-note">لا توجد زيارات مسجّلة بعد.</td></tr>';
+  }
+}
+
+const themeToggle = $("#themeToggle");
+const root = document.documentElement;
+themeToggle.addEventListener("click", ()=>{
+  const cur = root.getAttribute("data-theme"); const prefersDark = matchMedia("(prefers-color-scheme: dark)").matches;
+  const next = cur === "dark" ? "light" : cur === "light" ? "dark" : (prefersDark ? "light" : "dark");
+  root.setAttribute("data-theme", next);
+});
+})();
+</script>
+</body>
