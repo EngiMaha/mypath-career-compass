@@ -131,7 +131,10 @@ function analyzeCV(text, catKey){
   const words = text.trim().split(/\s+/).filter(Boolean);
   const wc = words.length;
   const hasEmail = /[\w.+-]+@[\w-]+\.[\w.-]+/.test(text);
-  const hasPhone = /(\+?\d[\d\s-]{7,}\d)/.test(text);
+  /* Arabic CVs very often type phone numbers with Arabic-Indic digits
+     (٠-٩) instead of 0-9 -- a pure \d regex misses those entirely and
+     wrongly reports "no phone number found" on a CV that has one. */
+  const hasPhone = /(\+?[\d٠-٩][\d\s\-()٠-٩]{7,}[\d٠-٩])/.test(text);
   const contactScore = (hasEmail?10:0) + (hasPhone?10:0);
   const sectionsFound = SECTION_WORDS.filter(w=>lower.includes(w.toLowerCase()));
   const sectionsScore = Math.min(20, sectionsFound.length * 5);
@@ -179,7 +182,15 @@ function analyzeCV(text, catKey){
 function renderCvReport(text, catKey){
   const {score, items} = analyzeCV(text, catKey);
   const status = score>=75 ? {c:"good",l:"جيدة جدًا"} : score>=50 ? {c:"warn",l:"تحتاج تحسينًا"} : {c:"bad",l:"تحتاج عملًا إضافيًا"};
-  let html = `<div class="score-tile">
+  const ats = score>=75
+    ? {c:"good", icon:"✅", title:"متوافقة مع أنظمة الفرز الآلي (ATS)", desc:"سيرتك تحتوي على العناصر الأساسية التي تبحث عنها أنظمة الفرز الآلي لدى الشركات."}
+    : score>=50
+    ? {c:"warn", icon:"⚠️", title:"متوافقة جزئيًا مع أنظمة ATS", desc:"سيرتك بها أساسيات جيدة، لكن ينقصها بعض العناصر المهمة — راجع الملاحظات أدناه لرفع فرص قبولها آليًا."}
+    : {c:"bad", icon:"⛔", title:"غير متوافقة حاليًا مع أنظمة ATS", desc:"سيرتك تفتقر لعدة عناصر أساسية قد تمنع أنظمة الفرز الآلي من قراءتها وتصنيفها بشكل صحيح."};
+  let html = `<div class="ats-verdict ats-${ats.c}">
+    <span class="ats-ic">${ats.icon}</span>
+    <div><h4>${ats.title}</h4><p>${ats.desc}</p></div>
+  </div><div class="score-tile">
     <div class="num-big" style="color:var(--${status.c})">${score}</div>
     <div class="score-meta">
       <span class="score-tag" style="color:var(--${status.c})">${status.l}</span>

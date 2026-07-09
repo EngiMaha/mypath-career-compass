@@ -313,6 +313,13 @@ p{margin:0;} ul{margin:0;padding:0;list-style:none;} button{font-family:inherit;
 .file-formats{font-size:.74rem; color:var(--ink-faint); text-align:center;}
 
 .cv-report{display:flex; flex-direction:column; gap:1.2rem;}
+.ats-verdict{display:flex; align-items:flex-start; gap:.9rem; border-radius:var(--radius-l); padding:1.1rem 1.3rem; margin-bottom:1rem; border:1px solid transparent;}
+.ats-verdict .ats-ic{font-size:1.5rem; line-height:1; flex:none;}
+.ats-verdict h4{font-size:1rem; margin-bottom:.25rem;}
+.ats-verdict p{font-size:.82rem; color:var(--ink-muted);}
+.ats-verdict.ats-good{background:var(--good-soft); border-color:var(--good);}
+.ats-verdict.ats-warn{background:var(--warn-soft); border-color:var(--warn);}
+.ats-verdict.ats-bad{background:var(--bad-soft); border-color:var(--bad);}
 .score-tile{background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-l); padding:1.5rem; display:flex; align-items:center; gap:1.4rem; flex-wrap:wrap;}
 .score-tile .num-big{font-family:var(--font-m); font-size:3rem; font-weight:800; line-height:1;}
 .score-tile .score-meta{min-width:200px;}
