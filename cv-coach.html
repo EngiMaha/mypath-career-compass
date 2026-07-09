@@ -260,17 +260,72 @@ function unescapePdfString(s){
     return '';
   });
 }
-function extractTextOperators(content){
-  let out = ''; const opRe = /\((?:[^()\\]|\\.)*\)\s*Tj|\[(?:[^\[\]]|\\.)*\]\s*TJ|\bT\*|\bTd\b|\bTD\b/g;
+function hexStrToRaw(hex){
+  let s=''; for(let i=0;i<hex.length-1;i+=2){ s += String.fromCharCode(parseInt(hex.substr(i,2),16)||0); } return s;
+}
+/* many PDF generators embed subset fonts where glyph codes don't map to
+   ASCII/Latin1 at all (especially for Arabic) — a /ToUnicode CMap, when
+   present, is the font's own answer to "what text does this code mean".
+   We merge every ToUnicode CMap found in the file into one lookup table
+   and use it to decode both literal "(...)" and hex "<...>" strings. */
+function parseToUnicodeCMap(content, map){
+  let m;
+  const bfcharRe = /beginbfchar([\s\S]*?)endbfchar/g;
+  while((m = bfcharRe.exec(content))){
+    const pairRe = /<([0-9A-Fa-f]+)>\s*<([0-9A-Fa-f]+)>/g; let p;
+    while((p = pairRe.exec(m[1]))){ map.set(p[1].toUpperCase(), hexToUnicodeStr(p[2])); }
+  }
+  const bfrangeRe = /beginbfrange([\s\S]*?)endbfrange/g;
+  while((m = bfrangeRe.exec(content))){
+    const rangeRe = /<([0-9A-Fa-f]+)>\s*<([0-9A-Fa-f]+)>\s*<([0-9A-Fa-f]+)>/g; let p;
+    while((p = rangeRe.exec(m[1]))){
+      const width = p[1].length, lo = parseInt(p[1],16), hi = parseInt(p[2],16), dstBase = parseInt(p[3],16);
+      if(hi >= lo && (hi-lo) < 3000){
+        for(let i=0;i<=hi-lo;i++){ map.set((lo+i).toString(16).toUpperCase().padStart(width,'0'), String.fromCodePoint(dstBase+i)); }
+      }
+    }
+  }
+}
+function hexToUnicodeStr(hex){
+  let s=''; for(let i=0;i<hex.length-3;i+=4){ const c=parseInt(hex.substr(i,4),16); if(!isNaN(c)) s+=String.fromCharCode(c); } return s;
+}
+function detectCodeWidth(toUnicode){
+  let w2=0, w1=0;
+  toUnicode.forEach((v,k)=>{ if(k.length>2) w2++; else w1++; });
+  return w2 > w1 ? 2 : 1;
+}
+function decodePdfChars(rawStr, toUnicode, width){
+  let out = '';
+  const step = width === 2 ? 2 : 1;
+  for(let i=0;i+step<=rawStr.length;i+=step){
+    const code = step===2 ? ((rawStr.charCodeAt(i)<<8)|rawStr.charCodeAt(i+1)) : rawStr.charCodeAt(i);
+    const hex = code.toString(16).toUpperCase().padStart(step*2,'0');
+    out += toUnicode.has(hex) ? toUnicode.get(hex) : String.fromCharCode(code);
+  }
+  return out;
+}
+function extractTextOperators(content, toUnicode, width){
+  let out = '';
+  const opRe = /\((?:[^()\\]|\\.)*\)\s*Tj|<[0-9A-Fa-f\s]*>\s*Tj|\[(?:[^\[\]]|\\.)*\]\s*TJ|\bT\*|\bTd\b|\bTD\b/g;
   let m;
   while((m = opRe.exec(content))){
     const tok = m[0];
     if(tok === "T*" || tok === "Td" || tok === "TD"){ out += '\n'; continue; }
-    if(/Tj\s*$/.test(tok)){ const str = tok.slice(tok.indexOf('(')+1, tok.lastIndexOf(')')); out += unescapePdfString(str) + ' '; }
-    else if(/TJ\s*$/.test(tok)){
+    if(/Tj\s*$/.test(tok)){
+      if(tok[0] === '('){
+        const str = tok.slice(tok.indexOf('(')+1, tok.lastIndexOf(')'));
+        out += decodePdfChars(unescapePdfString(str), toUnicode, 1) + ' ';
+      } else {
+        const hex = tok.slice(tok.indexOf('<')+1, tok.lastIndexOf('>')).replace(/\s+/g,'');
+        out += decodePdfChars(hexStrToRaw(hex), toUnicode, width) + ' ';
+      }
+    } else if(/TJ\s*$/.test(tok)){
       const arr = tok.slice(tok.indexOf('[')+1, tok.lastIndexOf(']'));
-      const strRe = /\((?:[^()\\]|\\.)*\)/g; let sm;
-      while((sm = strRe.exec(arr))){ out += unescapePdfString(sm[0].slice(1,-1)); }
+      const partRe = /\((?:[^()\\]|\\.)*\)|<[0-9A-Fa-f\s]+>/g; let sm;
+      while((sm = partRe.exec(arr))){
+        if(sm[0][0] === '('){ out += decodePdfChars(unescapePdfString(sm[0].slice(1,-1)), toUnicode, 1); }
+        else { out += decodePdfChars(hexStrToRaw(sm[0].slice(1,-1).replace(/\s+/g,'')), toUnicode, width); }
+      }
       out += ' ';
     }
   }
@@ -278,7 +333,8 @@ function extractTextOperators(content){
 }
 async function extractPdfText(arrayBuffer){
   const bytes = new Uint8Array(arrayBuffer); const raw = bytesToLatin1(bytes);
-  const streamRe = /stream\r?\n([\s\S]*?)\r?\nendstream/g; let m; let allText = '';
+  const streamRe = /stream\r?\n([\s\S]*?)\r?\nendstream/g; let m;
+  const decoded = [];
   while((m = streamRe.exec(raw))){
     const before = raw.slice(Math.max(0, m.index-500), m.index);
     const isFlate = /\/Filter\s*(\[[^\]]*\/FlateDecode[^\]]*\]|\/FlateDecode)/.test(before);
@@ -286,15 +342,23 @@ async function extractPdfText(arrayBuffer){
     let content;
     if(isFlate){ try{ content = bytesToLatin1(await inflateBytes(chunkBytes, 'deflate')); } catch(e){ continue; } }
     else content = m[1];
-    if(/\bBT\b/.test(content) && (/\bTj\b/.test(content) || /\bTJ\b/.test(content))){ allText += extractTextOperators(content) + '\n'; }
+    decoded.push(content);
   }
+  const toUnicode = new Map();
+  decoded.forEach(content=>{ if(/beginbfchar|beginbfrange/.test(content)) parseToUnicodeCMap(content, toUnicode); });
+  const width = detectCodeWidth(toUnicode);
+  let allText = '';
+  decoded.forEach(content=>{
+    if(/\bBT\b/.test(content) && (/\bTj\b/.test(content) || /\bTJ\b/.test(content))){ allText += extractTextOperators(content, toUnicode, width) + '\n'; }
+  });
   return allText.trim();
 }
 function looksUsable(text){
   if(!text || text.trim().length < 40) return false;
   const words = text.trim().split(/\s+/).filter(w=>w.length>1);
   if(words.length < 15) return false;
-  const printable = (text.match(/[\x20-\x7Eء-ي]/g)||[]).length;
+  const arabicRanges = '\\u0600-\\u06FF\\u0750-\\u077F\\u08A0-\\u08FF\\uFB50-\\uFDFF\\uFE70-\\uFEFF';
+  const printable = (text.match(new RegExp('[\\x20-\\x7E' + arabicRanges + ']', 'g'))||[]).length;
   return (printable/text.length) > 0.6;
 }
 
