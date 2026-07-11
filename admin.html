@@ -43,7 +43,7 @@
     <div class="section-head">
       <span class="eyebrow">إحصائيات الزيارات</span>
       <h2>مرحبًا بك في لوحة التحكم</h2>
-      <p class="admin-note" id="scopeNote">مبنية على آخر 1000 زيارة مسجّلة (بيانات مجهولة تمامًا: لا IP ولا معلومات شخصية).</p>
+      <p class="admin-note" id="scopeNote">مبنية على آخر 5000 زيارة مسجّلة (بيانات مجهولة تمامًا: لا IP ولا معلومات شخصية).</p>
     </div>
 
     <div class="stat-row">
@@ -69,8 +69,8 @@
     </div>
 
     <div class="budget-card">
-      <div class="budget-top"><span class="field-label">أحدث الزيارات</span></div>
-      <div class="table-scroll">
+      <div class="budget-top"><span class="field-label">جميع الزيارات</span><span class="admin-note" id="recentCount"></span></div>
+      <div class="table-scroll" style="max-height:520px; overflow-y:auto;">
         <table class="admin-table">
           <thead><tr><th>الوقت</th><th>الصفحة</th><th>الجهاز</th><th>النظام والمتصفح</th><th>المصدر</th></tr></thead>
           <tbody id="recentRows"></tbody>
@@ -132,7 +132,7 @@ if(notConfigured || typeof supabase === "undefined"){
     const { count } = await client.from("page_views").select("*", { count: "exact", head: true });
     $(".num-total").textContent = (count ?? 0).toLocaleString("en-US");
 
-    const { data: rows, error } = await client.from("page_views").select("*").order("created_at", { ascending:false }).limit(1000);
+    const { data: rows, error } = await client.from("page_views").select("*").order("created_at", { ascending:false }).limit(5000);
     if(error || !rows){ return; }
 
     const uniqueSessions = new Set(rows.map(r=>r.session_id)).size;
@@ -143,7 +143,8 @@ if(notConfigured || typeof supabase === "undefined"){
     renderDayChart(rows);
     renderDeviceBreakdown(rows);
     renderTopPages(rows);
-    renderRecent(rows.slice(0, 20));
+    $("#recentCount").textContent = "(عرض " + rows.length.toLocaleString("en-US") + " من أصل " + (count ?? rows.length).toLocaleString("en-US") + ")";
+    renderRecent(rows);
   }
 
   function renderDayChart(rows){
