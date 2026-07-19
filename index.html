@@ -156,9 +156,6 @@ const state = { qIndex:0, answers:[] };
 function show(id){ ["panelChoice","panelDirect","panelQuiz","panelResults"].forEach(p=>{ $("#"+p).classList.toggle("hidden", p!==id); }); }
 function goToRoadmap(catKey){ location.href = "roadmap.html?cat=" + encodeURIComponent(catKey); }
 
-function catLabel(c){ return getLang()==="en" && c.labelEn ? c.labelEn : c.label; }
-function catBlurb(c){ return getLang()==="en" && c.blurbEn ? c.blurbEn : c.blurb; }
-
 function renderCatPicker(){
   const grid = $("#catPickerGrid");
   grid.innerHTML = CAT_KEYS.map(k=>{

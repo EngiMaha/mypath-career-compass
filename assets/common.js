@@ -4,6 +4,8 @@
 const $ = (sel, root=document)=>root.querySelector(sel);
 const $$ = (sel, root=document)=>[...root.querySelectorAll(sel)];
 function fmt(n){ return n.toLocaleString("en-US"); }
+function catLabel(c){ return getLang()==="en" && c.labelEn ? c.labelEn : c.label; }
+function catBlurb(c){ return getLang()==="en" && c.blurbEn ? c.blurbEn : c.blurb; }
 
 function providerLinkHTML(provider, colorVar){
   const url = PROVIDER_LINKS[provider];

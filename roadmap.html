@@ -108,10 +108,15 @@ if(!catKey || !CATS[catKey]){
 } else {
   const cat = CATS[catKey];
   $("#rmIcon").textContent = cat.icon;
-  $("#rmTitle").textContent = cat.label;
-  $("#rmBlurb").textContent = cat.blurb;
   $("#rmToCV").href = "cv-coach.html?cat=" + encodeURIComponent(catKey);
-  document.title = cat.label + " — MyPath";
+
+  function renderHeader(){
+    $("#rmTitle").textContent = catLabel(cat);
+    $("#rmBlurb").textContent = catBlurb(cat);
+    document.title = catLabel(cat) + " — MyPath";
+  }
+  renderHeader();
+  document.addEventListener("mp:langchange", renderHeader);
 
   const tiers = tierCerts(cat.certs);
   const picks = tiers.map(t => t.slice().sort((a,b)=>a.c-b.c)[0]);
