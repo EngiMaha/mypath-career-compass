@@ -5,10 +5,10 @@ const $ = (sel, root=document)=>root.querySelector(sel);
 const $$ = (sel, root=document)=>[...root.querySelectorAll(sel)];
 function fmt(n){ return n.toLocaleString("en-US"); }
 
-function providerLinkHTML(provider, colorVar, labelAr){
+function providerLinkHTML(provider, colorVar){
   const url = PROVIDER_LINKS[provider];
-  if(!url) return '<span class="cert-nolink">لا يتوفر رابط رسمي مباشر لهذه الجهة</span>';
-  return `<a class="cert-link" style="color:var(--${colorVar||'teal'})" href="${url}" target="_blank" rel="noopener noreferrer">${labelAr} ↗</a>`;
+  if(!url) return `<span class="cert-nolink">${t("no_link")}</span>`;
+  return `<a class="cert-link" style="color:var(--${colorVar||'teal'})" href="${url}" target="_blank" rel="noopener noreferrer">${t("register_link")} ↗</a>`;
 }
 
 /** Renders one certification card. opts: {recommended:boolean, catChip:string|null} */
@@ -23,12 +23,12 @@ function certCardHTML(cert, colorVar, opts={}){
         <span class="en-inline title">${cert.e}</span>
         <div class="provider">${cert.p}</div>
       </div>
-      <span class="price-pill">${fmt(cert.c)}<small>﷼ (الحد الأعلى)</small></span>
+      <span class="price-pill">${fmt(cert.c)}<small>﷼ ${t("price_suffix")}</small></span>
     </div>
     <p class="desc">${cert.d}</p>
     <div class="skill-chips">${cert.sk.map(s=>`<span class="skill-chip">✓ ${s}</span>`).join("")}</div>
-    ${recommended?'<span class="recommended">⭐ اختيارنا لهذه المرحلة</span>':''}
-    <div class="cert-foot">${providerLinkHTML(cert.p, colorVar, "التسجيل لدى الجهة")}</div>
+    ${recommended?`<span class="recommended">${t("recommended_badge")}</span>`:''}
+    <div class="cert-foot">${providerLinkHTML(cert.p, colorVar)}</div>
   </div>`;
 }
 
@@ -36,12 +36,12 @@ function courseCardHTML(c){
   return `<div class="course-card">
     <div class="course-top">
       <span class="course-provider">${c.p}</span>
-      <span class="free-badge ${c.free?'free':'paid'}">${c.free? 'مجاني':'مدفوع جزئيًا'}</span>
+      <span class="free-badge ${c.free?'free':'paid'}">${c.free? t("free_badge"):t("paid_badge")}</span>
     </div>
     <h4>${c.n}<span class="en-inline title">${c.e}</span></h4>
     <p class="desc">${c.d}</p>
     <div class="skill-chips">${c.sk.map(s=>`<span class="skill-chip">✓ ${s}</span>`).join("")}</div>
-    <a class="cert-link" style="color:var(--violet); margin-top:.3rem;" href="${c.link}" target="_blank" rel="noopener noreferrer">ابدأ التعلم ↗</a>
+    <a class="cert-link" style="color:var(--violet); margin-top:.3rem;" href="${c.link}" target="_blank" rel="noopener noreferrer">${t("start_learning")}</a>
   </div>`;
 }
 

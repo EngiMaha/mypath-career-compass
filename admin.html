@@ -9,9 +9,13 @@
 
 <nav class="topnav">
   <div class="wrap">
-    <a href="index.html" class="brand"><span class="mark"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 38 L22 27 L30 32 L41 9" stroke="var(--ink-muted)" stroke-width="3" fill="none" opacity=".3" stroke-linecap="round"/><circle cx="8" cy="38" r="6" fill="var(--teal)"/><circle cx="25" cy="29" r="6" fill="var(--gold)"/><circle cx="41" cy="9" r="7" fill="var(--violet)"/></svg></span> MyPath <span style="color:var(--ink-faint); font-weight:400; font-size:.85rem;">· لوحة التحكم</span></a>
+    <a href="index.html" class="brand"><span class="mark"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 38 L22 27 L30 32 L41 9" stroke="var(--ink-muted)" stroke-width="3" fill="none" opacity=".3" stroke-linecap="round"/><circle cx="8" cy="38" r="6" fill="var(--teal)"/><circle cx="25" cy="29" r="6" fill="var(--gold)"/><circle cx="41" cy="9" r="7" fill="var(--violet)"/></svg></span> MyPath <span style="color:var(--ink-faint); font-weight:400; font-size:.85rem;" data-i18n="admin_tagline">· لوحة التحكم</span></a>
     <div class="nav-actions">
-      <button class="btn btn-ghost btn-sm hidden" id="logoutBtn">تسجيل الخروج</button>
+      <div class="lang-toggle">
+        <button data-lang="ar">AR</button>
+        <button data-lang="en">EN</button>
+      </div>
+      <button class="btn btn-ghost btn-sm hidden" id="logoutBtn" data-i18n="logout_btn">تسجيل الخروج</button>
       <button class="theme-toggle" id="themeToggle" aria-label="تبديل المظهر">🌗</button>
     </div>
   </div>
@@ -20,20 +24,20 @@
 <section class="section" id="loginSection">
   <div class="wrap admin-shell">
     <div class="section-head" style="text-align:center; align-items:center;">
-      <span class="eyebrow">دخول المسؤول</span>
-      <h2>لوحة تحكم MyPath</h2>
-      <p>هذه الصفحة خاصة بمالكة الموقع فقط. سجّلي الدخول بحساب المسؤول لعرض إحصائيات الزيارات.</p>
+      <span class="eyebrow" data-i18n="admin_login_eyebrow">دخول المسؤول</span>
+      <h2 data-i18n="admin_login_heading">لوحة تحكم MyPath</h2>
+      <p data-i18n="admin_login_desc">هذه الصفحة خاصة بمالكة الموقع فقط. سجّلي الدخول بحساب المسؤول لعرض إحصائيات الزيارات.</p>
     </div>
     <div class="admin-card">
-      <label>البريد الإلكتروني
+      <label data-i18n="admin_email_label">البريد الإلكتروني
         <input type="email" id="loginEmail" autocomplete="username" placeholder="admin@example.com">
       </label>
-      <label>كلمة المرور
+      <label data-i18n="admin_password_label">كلمة المرور
         <input type="password" id="loginPassword" autocomplete="current-password" placeholder="••••••••">
       </label>
       <div class="admin-error" id="loginError"></div>
-      <button class="btn btn-teal" id="loginBtn">دخول</button>
-      <p class="admin-note">لا يوجد تسجيل حساب جديد من هنا عمدًا — يُنشأ حساب المسؤول يدويًا من لوحة Supabase (Authentication → Users) لضمان أن الوصول للإحصائيات محصور بك وحدك.</p>
+      <button class="btn btn-teal" id="loginBtn" data-i18n="admin_login_btn">دخول</button>
+      <p class="admin-note" data-i18n="admin_login_note">لا يوجد تسجيل حساب جديد من هنا عمدًا — يُنشأ حساب المسؤول يدويًا من لوحة Supabase (Authentication → Users) لضمان أن الوصول للإحصائيات محصور بك وحدك.</p>
     </div>
   </div>
 </section>
@@ -41,38 +45,38 @@
 <section class="section hidden" id="dashboardSection">
   <div class="wrap">
     <div class="section-head">
-      <span class="eyebrow">إحصائيات الزيارات</span>
-      <h2>مرحبًا بك في لوحة التحكم</h2>
-      <p class="admin-note" id="scopeNote">مبنية على آخر 5000 زيارة مسجّلة (بيانات مجهولة تمامًا: لا IP ولا معلومات شخصية).</p>
+      <span class="eyebrow" data-i18n="admin_stats_eyebrow">إحصائيات الزيارات</span>
+      <h2 data-i18n="admin_welcome">مرحبًا بك في لوحة التحكم</h2>
+      <p class="admin-note" id="scopeNote" data-i18n="admin_scope_note">مبنية على آخر 5000 زيارة مسجّلة (بيانات مجهولة تمامًا: لا IP ولا معلومات شخصية).</p>
     </div>
 
     <div class="stat-row">
-      <div class="stat-tile"><span class="num num-total">—</span><span class="lbl">إجمالي الزيارات المسجّلة (كل الوقت)</span></div>
-      <div class="stat-tile"><span class="num num-unique">—</span><span class="lbl">جلسات فريدة تقريبية</span></div>
-      <div class="stat-tile"><span class="num num-pages">—</span><span class="lbl">صفحات مختلفة تمت زيارتها</span></div>
+      <div class="stat-tile"><span class="num num-total">—</span><span class="lbl" data-i18n="admin_total_visits">إجمالي الزيارات المسجّلة (كل الوقت)</span></div>
+      <div class="stat-tile"><span class="num num-unique">—</span><span class="lbl" data-i18n="admin_unique_sessions">جلسات فريدة تقريبية</span></div>
+      <div class="stat-tile"><span class="num num-pages">—</span><span class="lbl" data-i18n="admin_unique_pages">صفحات مختلفة تمت زيارتها</span></div>
     </div>
 
     <div class="budget-card">
-      <div class="budget-top"><span class="field-label">الزيارات آخر 14 يومًا</span></div>
+      <div class="budget-top"><span class="field-label" data-i18n="admin_last14">الزيارات آخر 14 يومًا</span></div>
       <div class="daybar-row" id="dayChart"></div>
     </div>
 
     <div class="budget-card">
-      <div class="budget-top"><span class="field-label">توزيع الأجهزة</span></div>
+      <div class="budget-top"><span class="field-label" data-i18n="admin_device_dist">توزيع الأجهزة</span></div>
       <div class="budget-seg" id="deviceSeg"></div>
       <div class="budget-legend" id="deviceLegend"></div>
     </div>
 
     <div class="budget-card">
-      <div class="budget-top"><span class="field-label">الصفحات الأكثر زيارة</span></div>
+      <div class="budget-top"><span class="field-label" data-i18n="admin_top_pages">الصفحات الأكثر زيارة</span></div>
       <div id="topPagesBars"></div>
     </div>
 
     <div class="budget-card">
-      <div class="budget-top"><span class="field-label">جميع الزيارات</span><span class="admin-note" id="recentCount"></span></div>
+      <div class="budget-top"><span class="field-label" data-i18n="admin_all_visits">جميع الزيارات</span><span class="admin-note" id="recentCount"></span></div>
       <div class="table-scroll" style="max-height:520px; overflow-y:auto;">
         <table class="admin-table">
-          <thead><tr><th>الوقت</th><th>الصفحة</th><th>الجهاز</th><th>النظام والمتصفح</th><th>المصدر</th></tr></thead>
+          <thead><tr><th data-i18n="admin_col_time">الوقت</th><th data-i18n="admin_col_page">الصفحة</th><th data-i18n="admin_col_device">الجهاز</th><th data-i18n="admin_col_os_browser">النظام والمتصفح</th><th data-i18n="admin_col_source">المصدر</th></tr></thead>
           <tbody id="recentRows"></tbody>
         </table>
       </div>
@@ -82,12 +86,13 @@
 
 <footer>
   <div class="wrap">
-    <p>هذه الصفحة غير مربوطة بقائمة التصفح العامة، لكن الحماية الفعلية ليست إخفاء الرابط — بل أن قراءة البيانات محمية بتسجيل دخول حقيقي (Supabase Auth) وقواعد أمان على مستوى قاعدة البيانات (Row Level Security)، بحيث لا يمكن لأي زائر آخر رؤية الإحصائيات حتى لو عرف هذا الرابط.</p>
+    <p data-i18n="admin_footer_note">هذه الصفحة غير مربوطة بقائمة التصفح العامة، لكن الحماية الفعلية ليست إخفاء الرابط — بل أن قراءة البيانات محمية بتسجيل دخول حقيقي (Supabase Auth) وقواعد أمان على مستوى قاعدة البيانات (Row Level Security)، بحيث لا يمكن لأي زائر آخر رؤية الإحصائيات حتى لو عرف هذا الرابط.</p>
   </div>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
 <script src="assets/supabase-config.js"></script>
+<script src="assets/i18n.js"></script>
 <script>
 (function(){
 "use strict";
@@ -95,7 +100,7 @@ const $ = (s,r=document)=>r.querySelector(s);
 
 const notConfigured = (typeof SUPABASE_URL === "undefined" || !SUPABASE_URL || SUPABASE_URL.indexOf("YOUR_") === 0);
 if(notConfigured || typeof supabase === "undefined"){
-  $("#loginSection .admin-card").innerHTML = '<p style="color:var(--bad); font-size:.9rem;">لم يتم إعداد Supabase بعد. أضيفي بيانات المشروع في <code>assets/supabase-config.js</code> ونفّذي <code>supabase/schema.sql</code> أولًا.</p>';
+  $("#loginSection .admin-card").innerHTML = `<p style="color:var(--bad); font-size:.9rem;">${t("admin_not_configured")}</p>`;
 } else {
   const client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
@@ -117,9 +122,9 @@ if(notConfigured || typeof supabase === "undefined"){
     const email = $("#loginEmail").value.trim();
     const password = $("#loginPassword").value;
     $("#loginError").textContent = "";
-    if(!email || !password){ $("#loginError").textContent = "أدخلي البريد وكلمة المرور."; return; }
+    if(!email || !password){ $("#loginError").textContent = t("admin_fill_fields"); return; }
     const { error } = await client.auth.signInWithPassword({ email, password });
-    if(error){ $("#loginError").textContent = "بيانات الدخول غير صحيحة، أو الحساب غير موجود."; return; }
+    if(error){ $("#loginError").textContent = t("admin_bad_login"); return; }
     showDashboard();
   });
   $("#loginPassword").addEventListener("keydown", (e)=>{ if(e.key === "Enter") $("#loginBtn").click(); });
@@ -128,13 +133,22 @@ if(notConfigured || typeof supabase === "undefined"){
 
   client.auth.getSession().then(({data})=>{ if(data.session) showDashboard(); });
 
+  let cachedRows = null, cachedCount = 0;
+
   async function loadStats(){
     const { count } = await client.from("page_views").select("*", { count: "exact", head: true });
-    $(".num-total").textContent = (count ?? 0).toLocaleString("en-US");
+    cachedCount = count ?? 0;
+    $(".num-total").textContent = cachedCount.toLocaleString("en-US");
 
     const { data: rows, error } = await client.from("page_views").select("*").order("created_at", { ascending:false }).limit(5000);
     if(error || !rows){ return; }
+    cachedRows = rows;
+    renderAll();
+  }
 
+  function renderAll(){
+    if(!cachedRows) return;
+    const rows = cachedRows;
     const uniqueSessions = new Set(rows.map(r=>r.session_id)).size;
     const uniquePages = new Set(rows.map(r=>r.path)).size;
     $(".num-unique").textContent = uniqueSessions.toLocaleString("en-US");
@@ -143,9 +157,10 @@ if(notConfigured || typeof supabase === "undefined"){
     renderDayChart(rows);
     renderDeviceBreakdown(rows);
     renderTopPages(rows);
-    $("#recentCount").textContent = "(عرض " + rows.length.toLocaleString("en-US") + " من أصل " + (count ?? rows.length).toLocaleString("en-US") + ")";
+    $("#recentCount").textContent = "(" + t("admin_showing") + " " + rows.length.toLocaleString("en-US") + " " + t("admin_of_total") + " " + (cachedCount || rows.length).toLocaleString("en-US") + ")";
     renderRecent(rows);
   }
+  document.addEventListener("mp:langchange", renderAll);
 
   function renderDayChart(rows){
     const days = [];
@@ -167,7 +182,7 @@ if(notConfigured || typeof supabase === "undefined"){
   function renderDeviceBreakdown(rows){
     const cats = ["desktop","mobile","tablet"];
     const colors = {desktop:"teal", mobile:"gold", tablet:"violet"};
-    const labelsAr = {desktop:"كمبيوتر", mobile:"جوال", tablet:"تابلت"};
+    const labelKeys = {desktop:"admin_device_desktop", mobile:"admin_device_mobile", tablet:"admin_device_tablet"};
     const total = rows.length || 1;
     const counts = {desktop:0, mobile:0, tablet:0};
     rows.forEach(r=>{ if(counts[r.device] !== undefined) counts[r.device]++; else counts.desktop++; });
@@ -177,7 +192,7 @@ if(notConfigured || typeof supabase === "undefined"){
     }).join("");
     $("#deviceLegend").innerHTML = cats.map(c=>{
       const pct = Math.round((counts[c]/total)*100);
-      return `<span class="k"><span class="sw" style="background:var(--${colors[c]})"></span>${labelsAr[c]}: <b class="num">${pct}%</b></span>`;
+      return `<span class="k"><span class="sw" style="background:var(--${colors[c]})"></span>${t(labelKeys[c])}: <b class="num">${pct}%</b></span>`;
     }).join("");
   }
 
@@ -193,16 +208,17 @@ if(notConfigured || typeof supabase === "undefined"){
         <span class="bar-track"><span class="bar-fill" style="width:${pct}%; background:${idx===0?'var(--gold)':'var(--teal)'}"></span></span>
         <span class="pct num">${n}</span>
       </div>`;
-    }).join("") || '<p class="admin-note">لا توجد بيانات بعد.</p>';
+    }).join("") || `<p class="admin-note">${t("admin_no_data")}</p>`;
   }
 
   function renderRecent(rows){
-    const labelsAr = {desktop:"كمبيوتر", mobile:"جوال", tablet:"تابلت"};
+    const labelKeys = {desktop:"admin_device_desktop", mobile:"admin_device_mobile", tablet:"admin_device_tablet"};
+    const dateLocale = getLang()==="en" ? "en-US" : "ar-SA";
     $("#recentRows").innerHTML = rows.map(r=>{
-      const t = r.created_at ? new Date(r.created_at).toLocaleString("ar-SA", {dateStyle:"short", timeStyle:"short"}) : "—";
-      const deviceLbl = labelsAr[r.device] || r.device || "—";
-      return `<tr><td class="num">${t}</td><td>${r.path||"—"}</td><td>${deviceLbl}</td><td>${r.device_detail||"—"}</td><td>${r.referrer||"مباشر"}</td></tr>`;
-    }).join("") || '<tr><td colspan="5" class="admin-note">لا توجد زيارات مسجّلة بعد.</td></tr>';
+      const timeStr = r.created_at ? new Date(r.created_at).toLocaleString(dateLocale, {dateStyle:"short", timeStyle:"short"}) : "—";
+      const deviceLbl = (labelKeys[r.device] && t(labelKeys[r.device])) || r.device || "—";
+      return `<tr><td class="num">${timeStr}</td><td>${r.path||"—"}</td><td>${deviceLbl}</td><td>${r.device_detail||"—"}</td><td>${r.referrer||t("admin_direct")}</td></tr>`;
+    }).join("") || `<tr><td colspan="5" class="admin-note">${t("admin_no_visits")}</td></tr>`;
   }
 }
 
