@@ -175,9 +175,9 @@ function renderQuizStep(){
   const i = state.qIndex, total = QUIZ.length, step = QUIZ[i];
   $("#quizProgress").innerHTML = QUIZ.map((_,idx)=>`<i class="${idx<i?'done':''}"></i>`).join("");
   $("#quizQNum").textContent = t("quiz_question_label") + " " + (i+1) + " " + t("quiz_of_label") + " " + total;
-  $("#quizQTitle").textContent = step.q[0];
+  $("#quizQTitle").textContent = L(step.q);
   $("#quizOpts").innerHTML = step.opts.map((o,idx)=>`
-    <button class="quiz-opt" data-idx="${idx}"><span class="bullet">${String.fromCharCode(65+idx)}</span><span class="txt"><span>${o.t[0]}</span></span></button>
+    <button class="quiz-opt" data-idx="${idx}"><span class="bullet">${String.fromCharCode(65+idx)}</span><span class="txt"><span>${L(o.t)}</span></span></button>
   `).join("");
   $("#quizStepLabel").textContent = (i+1)+" / "+total;
   $("#quizBack").style.visibility = i===0 ? "hidden":"visible";
