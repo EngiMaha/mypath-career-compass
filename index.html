@@ -156,14 +156,17 @@ const state = { qIndex:0, answers:[] };
 function show(id){ ["panelChoice","panelDirect","panelQuiz","panelResults"].forEach(p=>{ $("#"+p).classList.toggle("hidden", p!==id); }); }
 function goToRoadmap(catKey){ location.href = "roadmap.html?cat=" + encodeURIComponent(catKey); }
 
+function catLabel(c){ return getLang()==="en" && c.labelEn ? c.labelEn : c.label; }
+function catBlurb(c){ return getLang()==="en" && c.blurbEn ? c.blurbEn : c.blurb; }
+
 function renderCatPicker(){
   const grid = $("#catPickerGrid");
   grid.innerHTML = CAT_KEYS.map(k=>{
     const c = CATS[k];
     return `<button class="choice-card" data-cat="${k}">
       <span class="ico">${c.icon}</span>
-      <h3>${c.label}</h3>
-      <p>${c.blurb}</p>
+      <h3>${catLabel(c)}</h3>
+      <p>${catBlurb(c)}</p>
       <span class="go">${c.certs.length} ${t("cert_count_suffix")}</span>
     </button>`;
   }).join("");
@@ -201,7 +204,7 @@ function renderResults(scores){
   $("#resultsBars").innerHTML = ranked.map((k,idx)=>{
     const c = CATS[k]; const pct = Math.round((scores[k]/max)*100); const isTop = idx<3;
     return `<div class="bar-row">
-      <span class="lbl"><span>${c.icon} ${c.label}</span></span>
+      <span class="lbl"><span>${c.icon} ${catLabel(c)}</span></span>
       <span class="bar-track"><span class="bar-fill" style="width:0%; background:${isTop?'var(--gold)':'var(--teal)'}" data-w="${pct}"></span></span>
       <span class="pct num">${pct}%</span>
     </div>`;
@@ -212,7 +215,7 @@ function renderResults(scores){
     const c = CATS[k]; const pct = Math.round((scores[k]/max)*100);
     return `<button class="pick-card" data-cat="${k}">
       <span class="rank">${t("results_match_rank")} ${idx+1}</span>
-      <h4>${c.icon} ${c.label}</h4>
+      <h4>${c.icon} ${catLabel(c)}</h4>
       <span class="match">${t("results_match_pct")} <b class="num">${pct}%</b></span>
       <span class="go" style="color:var(--gold-strong,var(--gold)); font-weight:700; font-size:.85rem; margin-top:.3rem;">${t("results_build")}</span>
     </button>`;
